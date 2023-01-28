@@ -1,0 +1,38 @@
+<div class="dashboard">
+  <app-sidenav #appSideNav>
+    <dl>
+      <dt routerLink="/dashboard/home" routerLinkActive="active">Home</dt>
+    </dl>
+    <dl>
+      <dt routerLink="/dashboard/customer" routerLinkActive="active">Customer</dt>
+    </dl>
+    <dl>
+      <dt routerLink="/dashboard/movie" routerLinkActive="active">Movie</dt>
+    </dl>
+    <dl class="submenu">
+      <dt>Product</dt>
+      <dd>
+        <a routerLink="/dashboard/product" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          List
+        </a>
+        <a routerLink="/dashboard/product/detail" routerLinkActive="active">
+          Detalle
+        </a>
+      </dd>
+    </dl>
+  </app-sidenav>
+
+  <div class="wrapper">
+
+    <app-toolbar (sidenavToggle)="onSidenavToggle()"></app-toolbar>
+
+    <div class="content">
+      <div class="content__body">
+        <router-outlet></router-outlet>
+      </div>
+
+      <app-footer></app-footer>
+
+    </div>
+  </div>
+</div>
