@@ -5,18 +5,14 @@ import { AuthService } from 'src/app/core/services/auth.service';
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
   @Output() sidenavToggle = new EventEmitter<boolean>();
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onToggeleSidenav() {
     // this.appSidenavComponent.toggle();
@@ -41,5 +37,4 @@ export class ToolbarComponent implements OnInit {
       elem.msRequestFullScreen();
     }
   }
-
 }

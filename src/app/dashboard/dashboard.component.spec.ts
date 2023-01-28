@@ -13,17 +13,13 @@ describe('DashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        MatMenuModule,
-      ],
+      imports: [RouterTestingModule, MatMenuModule],
       declarations: [DashboardComponent],
       providers: [
         { provide: AuthService, useClass: FakeAuthenticationService },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {

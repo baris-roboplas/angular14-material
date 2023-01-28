@@ -12,11 +12,8 @@ describe('ConfirmDialogComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ConfirmDialogComponent],
       imports: [MatDialogModule],
-      providers: [
-        { provide: MAT_DIALOG_DATA, useValue: {} }
-      ],
-    })
-      .compileComponents();
+      providers: [{ provide: MAT_DIALOG_DATA, useValue: {} }],
+    }).compileComponents();
   });
 
   beforeEach(() => {

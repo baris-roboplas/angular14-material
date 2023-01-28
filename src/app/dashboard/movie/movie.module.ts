@@ -5,13 +5,8 @@ import { MovieRoutingModule } from './movie-routing.module';
 import { MovieService } from './movie.service';
 
 @NgModule({
-  declarations: [
-    ...MovieRoutingModule.components
-  ],
-  imports: [
-    MovieRoutingModule,
-    SharedModule
-  ],
-  providers: [MovieService]
+  declarations: [...MovieRoutingModule.components],
+  imports: [MovieRoutingModule, SharedModule],
+  providers: [MovieService],
 })
-export class MovieModule { }
+export class MovieModule {}

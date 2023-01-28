@@ -7,17 +7,15 @@ import { Oauth2Interceptor } from './http/oauth2.interceptor';
 import { NotFoundComponent } from './layouts/not-found/not-found.component';
 
 @NgModule({
-  declarations: [
-    NotFoundComponent,
-  ],
+  declarations: [NotFoundComponent],
   imports: [
     BrowserAnimationsModule, // For AngularMaterial Components
     HttpClientModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: Oauth2Interceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
   ],
-  exports: []
+  exports: [],
 })
-export class CoreModule { }
+export class CoreModule {}

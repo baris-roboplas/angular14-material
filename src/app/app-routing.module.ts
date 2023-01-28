@@ -9,17 +9,18 @@ const appRoutes: Routes = [
   {
     path: '',
     redirectTo: 'auth',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
-    resolve: [Logged]
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+    resolve: [Logged],
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
-    canActivate: [AuthGuard]
+    loadChildren: () =>
+      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'not-found',
@@ -27,16 +28,13 @@ const appRoutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'not-found'
-  }
+    redirectTo: 'not-found',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
-  providers: [
-    AuthGuard,
-    Logged
-  ]
+  providers: [AuthGuard, Logged],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

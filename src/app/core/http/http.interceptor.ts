@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpHeaders,
+  HttpRequest,
+  HttpResponse,
+} from '@angular/common/http';
 import { Observable, throwError, TimeoutError } from 'rxjs';
 import { map, catchError, finalize, timeout } from 'rxjs/operators';
 
@@ -10,14 +17,13 @@ const APP_XHR_TIMEOUT = 30000;
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
-
   constructor() {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    return next
-    .handle(this.performRequest(req))
-    .pipe(
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    return next.handle(this.performRequest(req)).pipe(
       timeout(APP_XHR_TIMEOUT),
       map((res) => this.handleSuccessfulResponse(res)),
       catchError((err) => this.handleErrorResponse(err)),
@@ -30,8 +36,11 @@ export class AppInterceptor implements HttpInterceptor {
     headers = headers.set('MyCustomHeaderKey', `MyCustomHeaderValue`);
     // headers = headers.set('MyCustomHeaderKey', `MyCustomHeaderValue`);
 
-    return req.clone({ url: `${environment.backend.host}/${req.url}`, headers });
-}
+    return req.clone({
+      url: `${environment.backend.host}/${req.url}`,
+      headers,
+    });
+  }
 
   private handleSuccessfulResponse(event: any): HttpResponse<any> {
     // console.log('response at interceptor', event);
@@ -62,7 +71,7 @@ export class AppInterceptor implements HttpInterceptor {
     let customError = new HttpError();
     try {
       customError = HttpError.initWithCode(errorResponse.error.errors[0].code);
-    } catch (e) { }
+    } catch (e) {}
 
     return throwError(customError);
   }
@@ -70,5 +79,4 @@ export class AppInterceptor implements HttpInterceptor {
   private handleRequestCompleted(): void {
     // console.log(`Request finished`);
   }
-
 }

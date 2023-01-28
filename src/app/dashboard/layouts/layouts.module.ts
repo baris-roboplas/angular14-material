@@ -12,11 +12,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
-  declarations: [
-    FooterComponent,
-    SidenavComponent,
-    ToolbarComponent,
-  ],
+  declarations: [FooterComponent, SidenavComponent, ToolbarComponent],
   imports: [
     CommonModule,
     MatButtonModule,
@@ -26,10 +22,6 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     MatToolbarModule,
     FlexLayoutModule,
   ],
-  exports: [
-    FooterComponent,
-    SidenavComponent,
-    ToolbarComponent
-  ],
+  exports: [FooterComponent, SidenavComponent, ToolbarComponent],
 })
-export class DashboardLayoutModule { }
+export class DashboardLayoutModule {}

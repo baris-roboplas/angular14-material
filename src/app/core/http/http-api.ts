@@ -15,5 +15,4 @@ export class HttpApi {
   // Payment
   static paymentList = 'api/payment';
   static paymentUpload = 'api/payment/upload';
-
 }

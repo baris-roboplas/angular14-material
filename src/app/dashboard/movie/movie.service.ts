@@ -9,11 +9,7 @@ import { Paginator } from 'src/app/core/models/paginator.model';
 
 @Injectable()
 export class MovieService {
-
-  constructor(
-    private handler: HttpBackend,
-    private http: HttpClient
-  ) {
+  constructor(private handler: HttpBackend, private http: HttpClient) {
     this.http = new HttpClient(handler); /// to skip interceptors, becouse this service hits third backend provider
   }
 
@@ -23,9 +19,12 @@ export class MovieService {
     params = params.append('language', 'en-US');
     params = params.append('page', String(pageIndex + 1));
 
-    return this.http.get<Paginator<Movie>>(`${environment.movieDB.host}/movie/now_playing`, { params })
+    return this.http
+      .get<Paginator<Movie>>(`${environment.movieDB.host}/movie/now_playing`, {
+        params,
+      })
       .pipe(
-        map(response => {
+        map((response) => {
           response.page = response.page - 1;
           return response;
         })
@@ -37,7 +36,8 @@ export class MovieService {
     params = params.append('api_key', '3661411c65331184ac73d8660d0b4648');
     params = params.append('language', 'en-US');
 
-    return this.http.get(`${environment.movieDB.host}/movie/${id}`, { params })
+    return this.http
+      .get(`${environment.movieDB.host}/movie/${id}`, { params })
       .pipe(
         map((data: any) => {
           console.log(data);
@@ -48,10 +48,6 @@ export class MovieService {
 
   delete(id: string): Observable<any> {
     // Let's going to mock a backend response,because there is no API available for delete
-    return of('Movie was deleted')
-      .pipe(
-        delay(500)
-      );
+    return of('Movie was deleted').pipe(delay(500));
   }
-
 }

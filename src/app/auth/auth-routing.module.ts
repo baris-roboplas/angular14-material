@@ -13,25 +13,24 @@ export const LoginRoutes: Routes = [
       {
         path: '',
         redirectTo: 'login',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
       },
       {
         path: 'register',
         component: RegisterComponent,
-      }
-    ]
-  }
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(LoginRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
 export class AuthRoutingModule {
   static components = [AuthComponent, LoginComponent, RegisterComponent];
 }

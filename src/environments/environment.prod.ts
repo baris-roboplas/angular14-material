@@ -11,5 +11,5 @@ export const environment = {
   },
   movieDB: {
     host: 'https://api.themoviedb.org/3',
-  }
+  },
 };

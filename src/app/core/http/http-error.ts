@@ -1,7 +1,6 @@
 import { APP_ERRORS } from './http-constants';
 
 export class HttpError {
-
   private _code!: string;
 
   get code(): string {
@@ -36,7 +35,7 @@ export class HttpError {
     const httpError = new HttpError();
     httpError.code = code;
 
-    const appError = APP_ERRORS.find( item => item.code === code);
+    const appError = APP_ERRORS.find((item) => item.code === code);
     if (appError) {
       httpError.title = appError.title;
       httpError.message = appError.message;
@@ -44,5 +43,4 @@ export class HttpError {
 
     return httpError;
   }
-
 }

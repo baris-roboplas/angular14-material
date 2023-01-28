@@ -15,7 +15,7 @@ import { MOCKED_FEATURES_WARNING_MESSAGE } from '../movie.constants';
 @Component({
   selector: 'app-movie-detail',
   templateUrl: './movie-detail.component.html',
-  styleUrls: ['./movie-detail.component.scss']
+  styleUrls: ['./movie-detail.component.scss'],
 })
 export class MovieDetailComponent implements OnInit, OnDestroy {
   movieId!: string;
@@ -31,7 +31,7 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
     private movieService: MovieService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {
     this.initFormBuilder();
   }
@@ -46,8 +46,8 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
         .get(this.movieId)
         .pipe(finalize(() => this.loadingBackdropService.hide()))
         .subscribe(
-          data => this.loadFormData(data),
-          error => {}
+          (data) => this.loadFormData(data),
+          (error) => {}
         );
     } else {
       this.pageType = 'new';
@@ -76,11 +76,11 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Confirm',
-        body: 'Are you sure you want to delete this movie?'
+        body: 'Are you sure you want to delete this movie?',
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.deleteMovie();
       }
@@ -101,7 +101,10 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
       popularity: new FormControl({ value: null, disabled: false }),
       poster_path: new FormControl({ value: null, disabled: false }),
       release_date: new FormControl({ value: null, disabled: false }),
-      title: new FormControl({ value: null, disabled: false }, Validators.required),
+      title: new FormControl(
+        { value: null, disabled: false },
+        Validators.required
+      ),
       video: new FormControl({ value: null, disabled: false }),
       vote_average: new FormControl({ value: null, disabled: false }),
       vote_count: new FormControl({ value: null, disabled: false }),
@@ -140,7 +143,8 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
   }
 
   private showMockedFeaturesWarning() {
-    this.snackBar.open(MOCKED_FEATURES_WARNING_MESSAGE, 'OK', { duration: 10000 });
+    this.snackBar.open(MOCKED_FEATURES_WARNING_MESSAGE, 'OK', {
+      duration: 10000,
+    });
   }
-
 }

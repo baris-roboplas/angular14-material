@@ -5,13 +5,8 @@ import { CustomerRoutingModule } from './customer-routing.module';
 import { CustomerService } from './customer.service';
 
 @NgModule({
-  declarations: [
-    ...CustomerRoutingModule.components
-  ],
-  imports: [
-    CustomerRoutingModule,
-    SharedModule
-  ],
-  providers: [CustomerService]
+  declarations: [...CustomerRoutingModule.components],
+  imports: [CustomerRoutingModule, SharedModule],
+  providers: [CustomerService],
 })
-export class CustomerModule { }
+export class CustomerModule {}

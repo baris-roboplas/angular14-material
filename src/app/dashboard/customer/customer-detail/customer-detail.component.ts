@@ -14,7 +14,7 @@ import { ConfirmDialogComponent } from '../../../shared/utils/dialogs/confirm-di
 @Component({
   selector: 'app-customer-detail',
   templateUrl: './customer-detail.component.html',
-  styleUrls: ['./customer-detail.component.scss']
+  styleUrls: ['./customer-detail.component.scss'],
 })
 export class CustomerDetailComponent implements OnInit {
   clientId!: string;
@@ -30,7 +30,7 @@ export class CustomerDetailComponent implements OnInit {
     private loadingBackdropService: LoadingBackdropService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {
     this.initFormBuilder();
   }
@@ -45,8 +45,8 @@ export class CustomerDetailComponent implements OnInit {
         .get(this.clientId)
         .pipe(finalize(() => this.loadingBackdropService.hide()))
         .subscribe(
-          data => this.loadFormData(data),
-          error => {}
+          (data) => this.loadFormData(data),
+          (error) => {}
         );
     } else {
       this.pageType = 'new';
@@ -61,11 +61,11 @@ export class CustomerDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Confirm',
-        body: 'Are you sure you want to delete this customer?'
+        body: 'Are you sure you want to delete this customer?',
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.deleteCustomer();
       }
@@ -74,56 +74,59 @@ export class CustomerDetailComponent implements OnInit {
 
   deleteCustomer() {
     this.deleteSuscription = this.customerService
-    .delete(this.clientId)
-    .subscribe(response => {
-      this.snackBar.open('Customer deleted', 'OK', {
-        duration: 3000
-      });
-    },
-    error => {
-    });
+      .delete(this.clientId)
+      .subscribe(
+        (response) => {
+          this.snackBar.open('Customer deleted', 'OK', {
+            duration: 3000,
+          });
+        },
+        (error) => {}
+      );
   }
 
   saveCustomer() {
     const data = this.clientForm.getRawValue();
 
-    this.addSuscription = this.customerService
-    .update(data)
-    .subscribe(response => {
-      this.snackBar.open('Customer edited', 'OK', {
-        verticalPosition: 'bottom',
-        duration: 3000
-      });
-    },
-    error => {
-    });
+    this.addSuscription = this.customerService.update(data).subscribe(
+      (response) => {
+        this.snackBar.open('Customer edited', 'OK', {
+          verticalPosition: 'bottom',
+          duration: 3000,
+        });
+      },
+      (error) => {}
+    );
   }
 
   addCustomer() {
     const data = this.clientForm.getRawValue();
 
-    this.addSuscription = this.customerService
-      .add(data)
-      .subscribe(response => {
+    this.addSuscription = this.customerService.add(data).subscribe(
+      (response) => {
         this.snackBar.open('Customer added', 'OK', {
-          duration: 3000
+          duration: 3000,
         });
       },
-      error => {
+      (error) => {
         this.snackBar.open('Something went wrong', 'OK', {
-          duration: 3000
+          duration: 3000,
         });
-      });
+      }
+    );
   }
 
   private initFormBuilder() {
     this.clientForm = new FormGroup({
-      name: new FormControl({ value: '', disabled: false }, Validators.required),
+      name: new FormControl(
+        { value: '', disabled: false },
+        Validators.required
+      ),
       documentType: new FormControl({ value: '', disabled: false }),
       documentNumber: new FormControl({ value: '', disabled: false }),
       email: new FormControl({ value: '', disabled: false }),
       address: new FormControl({ value: '', disabled: false }),
-      phoneNumber: new FormControl({ value: '', disabled: false })
+      phoneNumber: new FormControl({ value: '', disabled: false }),
     });
   }
 
@@ -136,9 +139,8 @@ export class CustomerDetailComponent implements OnInit {
       documentNumber: customer.documentNumber,
       email: customer.email,
       address: customer.address,
-      phoneNumber: customer.phoneNumber
+      phoneNumber: customer.phoneNumber,
     });
     // this.clientForm.disable();
   }
-
 }

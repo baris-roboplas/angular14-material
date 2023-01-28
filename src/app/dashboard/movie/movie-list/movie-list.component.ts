@@ -12,11 +12,11 @@ import { MovieService } from '../../movie/movie.service';
 @Component({
   selector: 'app-movie-list',
   templateUrl: './movie-list.component.html',
-  styleUrls: ['./movie-list.component.scss']
+  styleUrls: ['./movie-list.component.scss'],
 })
 export class MovieListComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   dataSource = new MatTableDataSource<Movie>();
   displayedColumns: string[] = [
     'title',
@@ -30,8 +30,8 @@ export class MovieListComponent implements OnInit {
     private loadingBackdropService: LoadingBackdropService,
     private movieService: MovieService,
     private route: ActivatedRoute,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
@@ -66,5 +66,4 @@ export class MovieListComponent implements OnInit {
   onMovieDetailNavigate(customer: Movie) {
     this.router.navigate([customer.id], { relativeTo: this.route });
   }
-
 }

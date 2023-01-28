@@ -1,14 +1,22 @@
-import {Directive, HostListener, HostBinding, EventEmitter, Output} from '@angular/core';
+import {
+  Directive,
+  HostListener,
+  HostBinding,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 
 @Directive({
-  selector: '[appDnd]'
+  selector: '[appDnd]',
 })
 export class DndDirective {
-  @Output() private filesChangeEmiter: EventEmitter<File[]> = new EventEmitter();
-  @Output() private filesInvalidEmiter: EventEmitter<File[]> = new EventEmitter();
+  @Output() private filesChangeEmiter: EventEmitter<File[]> =
+    new EventEmitter();
+  @Output() private filesInvalidEmiter: EventEmitter<File[]> =
+    new EventEmitter();
   @HostBinding('style.opacity') public opacity!: string | null;
 
-  constructor() { }
+  constructor() {}
 
   @HostListener('dragover', ['$event']) public onDragOver(evt: any) {
     evt.preventDefault();
@@ -28,5 +36,4 @@ export class DndDirective {
     this.opacity = null;
     this.filesChangeEmiter.emit(evt);
   }
-
 }

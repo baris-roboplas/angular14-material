@@ -15,17 +15,11 @@ describe('CustomerListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        MatTableModule
-      ],
-      providers: [
-        { provide: CustomerService, useClass: FakeCustomerService },
-      ],
+      imports: [RouterTestingModule, MatTableModule],
+      providers: [{ provide: CustomerService, useClass: FakeCustomerService }],
       declarations: [CustomerListComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {

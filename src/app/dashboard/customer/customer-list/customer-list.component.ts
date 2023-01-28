@@ -12,11 +12,11 @@ import { CustomerService } from '../customer.service';
 @Component({
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',
-  styleUrls: ['./customer-list.component.scss']
+  styleUrls: ['./customer-list.component.scss'],
 })
 export class CustomerListComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   dataSource = new MatTableDataSource<Customer>();
   displayedColumns: string[] = [
@@ -24,15 +24,15 @@ export class CustomerListComponent implements OnInit {
     'name',
     'phoneNumber',
     'email',
-    'address'
+    'address',
   ];
 
   constructor(
     private customerService: CustomerService,
     private loadingBackdropService: LoadingBackdropService,
     private route: ActivatedRoute,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
@@ -58,5 +58,4 @@ export class CustomerListComponent implements OnInit {
   onCustomerDetailNavigate(customer: Customer) {
     this.router.navigate([customer.id], { relativeTo: this.route });
   }
-
 }

@@ -24,12 +24,9 @@ describe('CustomerDetailComponent', () => {
         MatDialogModule,
         MatSnackBarModule,
       ],
-      providers: [
-        { provide: CustomerService, useClass: FakeCustomerService },
-      ],
+      providers: [{ provide: CustomerService, useClass: FakeCustomerService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -54,7 +51,11 @@ describe('CustomerDetailComponent', () => {
     component.addCustomer();
 
     // @ts-ignore
-    expect(component.snackBar.open).toHaveBeenCalledWith('Customer added', 'OK', { duration: 3000 });
+    expect(component.snackBar.open).toHaveBeenCalledWith(
+      'Customer added',
+      'OK',
+      { duration: 3000 }
+    );
   });
 
   it('should display a warning message if server returns an error when adding a new customer', () => {
@@ -65,12 +66,18 @@ describe('CustomerDetailComponent', () => {
     component.addCustomer();
 
     // @ts-ignore
-    expect(component.snackBar.open).toHaveBeenCalledWith('Something went wrong', 'OK', { duration: 3000 });
+    expect(component.snackBar.open).toHaveBeenCalledWith(
+      'Something went wrong',
+      'OK',
+      { duration: 3000 }
+    );
   });
 
   it('should call server to delete a customer if the user confirms', () => {
     // @ts-ignore
-    spyOn(component.dialog, 'open').and.returnValue({ afterClosed: () => of(true) });
+    spyOn(component.dialog, 'open').and.returnValue({
+      afterClosed: () => of(true),
+    });
     const spy = spyOn(customerService, 'delete').and.returnValue(EMPTY);
 
     component.confirmDeleteCustomer();
@@ -80,7 +87,9 @@ describe('CustomerDetailComponent', () => {
 
   it('should NOT call server to delete a customer if the user cancels', () => {
     // @ts-ignore
-    spyOn(component.dialog, 'open').and.returnValue({ afterClosed: () => of(false) });
+    spyOn(component.dialog, 'open').and.returnValue({
+      afterClosed: () => of(false),
+    });
     const spy = spyOn(customerService, 'delete').and.returnValue(EMPTY);
 
     component.confirmDeleteCustomer();
@@ -90,13 +99,19 @@ describe('CustomerDetailComponent', () => {
 
   it('should display a success message if server responses that customer has been deleted', () => {
     // @ts-ignore
-    spyOn(component.dialog, 'open').and.returnValue({ afterClosed: () => of(true) });
+    spyOn(component.dialog, 'open').and.returnValue({
+      afterClosed: () => of(true),
+    });
     // @ts-ignore
     spyOn(component.snackBar, 'open');
 
     component.confirmDeleteCustomer();
 
     // @ts-ignore
-    expect(component.snackBar.open).toHaveBeenCalledWith('Customer deleted', 'OK', { duration: 3000 });
+    expect(component.snackBar.open).toHaveBeenCalledWith(
+      'Customer deleted',
+      'OK',
+      { duration: 3000 }
+    );
   });
 });

@@ -9,28 +9,29 @@ import { HttpApi } from '../http/http-api';
 const OAUTH_DATA = environment.oauth;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   constructor(private http: HttpClient) {}
 
   register(userRequest: any): Observable<any> {
     const data = {
       code: userRequest.codigo,
       email: userRequest.email,
-      password: userRequest.password
+      password: userRequest.password,
     };
 
-    return this.http.post(HttpApi.userRegister, data)
-      .pipe(
-        map((response: any) => {
-          return response;
-        })
-      );
+    return this.http.post(HttpApi.userRegister, data).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
   }
 
-  loginWithUserCredentials(username: string, password: string): Observable<any> {
+  loginWithUserCredentials(
+    username: string,
+    password: string
+  ): Observable<any> {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -42,7 +43,8 @@ export class AuthService {
     body.set('password', password);
     body.set('scope', OAUTH_DATA.scope);
 
-    return this.http.post(HttpApi.oauthLogin, body.toString(), { headers })
+    return this.http
+      .post(HttpApi.oauthLogin, body.toString(), { headers })
       .pipe(
         map((response: any) => {
           localStorage.setItem('session', JSON.stringify(response));
@@ -62,7 +64,8 @@ export class AuthService {
     body.set('refresh_token', this.refreshToken);
     body.set('scope', OAUTH_DATA.scope);
 
-    return this.http.post(HttpApi.oauthLogin, body.toString(), { headers })
+    return this.http
+      .post(HttpApi.oauthLogin, body.toString(), { headers })
       .pipe(
         map((response: any) => {
           localStorage.setItem('session', JSON.stringify(response));
@@ -80,10 +83,14 @@ export class AuthService {
   }
 
   get accessToken() {
-    return localStorage['session'] ? JSON.parse(localStorage['session']).access_token : null;
+    return localStorage['session']
+      ? JSON.parse(localStorage['session']).access_token
+      : null;
   }
 
   get refreshToken() {
-    return localStorage['session'] ? JSON.parse(localStorage['session']).refresh_token : null;
+    return localStorage['session']
+      ? JSON.parse(localStorage['session']).refresh_token
+      : null;
   }
 }

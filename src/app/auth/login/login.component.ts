@@ -11,7 +11,7 @@ import { DashboardComponent } from '../../dashboard/dashboard.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   form!: FormGroup;
@@ -29,24 +29,23 @@ export class LoginComponent implements OnInit {
     this.initFormBuilder();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   loginUser() {
     this.loginLoading = true;
 
     this.loginSubscription = this.authService
       .loginWithUserCredentials(this.form.value.email, this.form.value.password)
-      .pipe(finalize(() => this.loginLoading = false))
+      .pipe(finalize(() => (this.loginLoading = false)))
       .subscribe(
-        data => {
+        (data) => {
           this.router.navigate(DashboardComponent.path());
         },
-        error => {
+        (error) => {
           this.snackBar.open('Contraseña o usuario incorrecto', '', {
             duration: 3000,
             horizontalPosition: 'end',
-            verticalPosition: 'bottom'
+            verticalPosition: 'bottom',
           });
         }
       );
@@ -54,12 +53,11 @@ export class LoginComponent implements OnInit {
 
   private initFormBuilder() {
     this.form = this.formBuilder.group({
-      email: ['john.doe@mailinator.com', [
-        Validators.required,
-        Validators.email
-      ]],
-      password: ['@ngular2+', Validators.required]
+      email: [
+        'john.doe@mailinator.com',
+        [Validators.required, Validators.email],
+      ],
+      password: ['@ngular2+', Validators.required],
     });
   }
-
 }

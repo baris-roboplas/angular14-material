@@ -13,18 +13,13 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        MatSnackBarModule
-      ],
+      imports: [RouterTestingModule, ReactiveFormsModule, MatSnackBarModule],
       providers: [
         { provide: AuthService, useClass: FakeAuthenticationService },
       ],
       declarations: [LoginComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {

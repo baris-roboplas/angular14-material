@@ -7,23 +7,22 @@ import { CustomerDetailComponent } from './customer-detail/customer-detail.compo
 const routes: Routes = [
   {
     path: '',
-    component: CustomerListComponent
+    component: CustomerListComponent,
   },
   {
     path: 'new',
-    component: CustomerDetailComponent
+    component: CustomerDetailComponent,
   },
   {
     path: ':id',
-    component: CustomerDetailComponent
-  }
+    component: CustomerDetailComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
 export class CustomerRoutingModule {
   static components = [CustomerListComponent, CustomerDetailComponent];
 }

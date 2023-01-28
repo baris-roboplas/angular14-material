@@ -18,14 +18,8 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [
-    ...COMPONENTS,
-    DndDirective,
-  ],
-  imports: [
-    CommonModule,
-    MaterialModule
-  ],
+  declarations: [...COMPONENTS, DndDirective],
+  imports: [CommonModule, MaterialModule],
   exports: [
     CommonModule,
     FlexLayoutModule,
@@ -33,11 +27,8 @@ const COMPONENTS = [
     ReactiveFormsModule,
     MaterialModule,
     PerfectScrollbarModule,
-    ...COMPONENTS
+    ...COMPONENTS,
   ],
-  entryComponents: [
-    AlertDialogComponent,
-    ConfirmDialogComponent
-  ]
+  entryComponents: [AlertDialogComponent, ConfirmDialogComponent],
 })
-export class SharedModule { }
+export class SharedModule {}

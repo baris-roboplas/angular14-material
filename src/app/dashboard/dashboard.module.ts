@@ -5,13 +5,7 @@ import { DashboarRoutingModule } from './dashboard-routing.module';
 import { DashboardLayoutModule } from './layouts/layouts.module';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    DashboardLayoutModule,
-    DashboarRoutingModule
-  ],
-  declarations: [
-    ...DashboarRoutingModule.components
-  ]
+  imports: [SharedModule, DashboardLayoutModule, DashboarRoutingModule],
+  declarations: [...DashboarRoutingModule.components],
 })
-export class DashboardModule { }
+export class DashboardModule {}

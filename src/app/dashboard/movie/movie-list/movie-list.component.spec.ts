@@ -14,16 +14,10 @@ describe('MovieListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MovieListComponent],
-      imports: [
-        MatSnackBarModule,
-        RouterTestingModule,
-      ],
-      providers: [
-        { provide: MovieService, useClass: FakeMovieService },
-      ],
+      imports: [MatSnackBarModule, RouterTestingModule],
+      providers: [{ provide: MovieService, useClass: FakeMovieService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {

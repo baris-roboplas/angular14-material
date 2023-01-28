@@ -7,23 +7,22 @@ import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 const routes: Routes = [
   {
     path: '',
-    component: MovieListComponent
+    component: MovieListComponent,
   },
   {
     path: 'new',
-    component: MovieDetailComponent
+    component: MovieDetailComponent,
   },
   {
     path: ':id',
-    component: MovieDetailComponent
-  }
+    component: MovieDetailComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
 export class MovieRoutingModule {
   static components = [MovieListComponent, MovieDetailComponent];
 }

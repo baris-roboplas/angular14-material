@@ -26,12 +26,9 @@ describe('MovieDetailComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
       ],
-      providers: [
-        { provide: MovieService, useClass: FakeMovieService },
-      ],
+      providers: [{ provide: MovieService, useClass: FakeMovieService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {

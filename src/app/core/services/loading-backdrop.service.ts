@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoadingBackdropService {
-
-  constructor() { }
+  constructor() {}
 
   show() {
     const backdropWrapperElement = this.createLoadingBackdropTemplate();
@@ -21,7 +20,9 @@ export class LoadingBackdropService {
   private createLoadingBackdropTemplate(): HTMLDivElement {
     const element = document.createElement('div');
     element.setAttribute('id', 'loadingBackdrop');
-    element.setAttribute('style', `
+    element.setAttribute(
+      'style',
+      `
       width: 100vw;
       height: 100vh;
       display: flex;
@@ -30,7 +31,8 @@ export class LoadingBackdropService {
       position: absolute;
       top: 0;
       z-index: 999;
-    `);
+    `
+    );
     element.innerHTML = `
       <div class="backdrop"></div>
       <div class="spinner">
@@ -42,5 +44,4 @@ export class LoadingBackdropService {
     `;
     return element;
   }
-
 }
