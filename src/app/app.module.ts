@@ -4,6 +4,8 @@ import { CoreModule } from './core/core.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PasswordStrengthDirective } from './directives/password-strength.directive';
+import { OnlyOneErrorPipe } from './pipes/only-one-error.pipe';
 
 @NgModule({
   declarations: [AppComponent],
