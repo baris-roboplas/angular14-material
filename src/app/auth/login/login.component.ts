@@ -1,5 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NgForm,
+  NonNullableFormBuilder,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
@@ -7,14 +14,20 @@ import { finalize } from 'rxjs/operators';
 
 import { AuthService } from '../../core/services/auth.service';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
+import { createPasswordStrengthValidator } from 'src/app/validators/password-strength.validator';
 
+/**
+ * Reactive Forms vs Template Driven Forms (TDF; basic features, custom validation included)
+ *
+ * @class LoginComponent
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent{
-  // RF APPROACH
+export class LoginComponent {
+  // Starter Template Owner Approach
   // form!: FormGroup;
   // message!: string;
   // loginSubscription!: Subscription;
@@ -50,7 +63,6 @@ export class LoginComponent{
   //     );
   // }
 
-
   // private initFormBuilder() {
   //   this.form = this.formBuilder.group({
   //     email: [
@@ -61,29 +73,81 @@ export class LoginComponent{
   //   });
   // }
 
-  // TDF APPROACH
-  emailTDFValue = {
-    email: '',
-    password: ''
-  }
+  // RF APPROACH
   loginLoading = false;
 
-  loginUserTdf(tdfForm:NgForm, submit:Event) {
-    console.log('tdfForm Submitted',tdfForm)
-    console.log('tdfForm submit event',submit)
+  // //alternative way of defining form control
+  // email = new FormControl('', {
+  //   validators: [Validators.required, Validators.email],
+  //   updateOn: 'blur',
+  // });
+  // // preparing from group without form builder api
+  // form = new FormGroup({
+  //   email: this.email,
+  //   password: new FormControl('', {
+  //     validators: [Validators.required, Validators.minLength(8), createPasswordStrengthValidator()],
+  //   }),
+  // });
+
+  form =
+    /*  In order to make sure that you use type inference and type forms to its maximum effect,
+      make sure to always declare your variables like this without explicitly saying that this is a form group
+      led type inference.
+      Everything works out of the box and you don't have to do anything special in order to benefit from this
+      extra type safety. Other than avoiding the common pitfall of assigning an explicit type to your form variable.
+  */
+    this.formBuilder.group({
+      email: [
+        '',
+        {
+          validators: [Validators.required, Validators.email],
+          updateOn: 'blur',
+        },
+      ],
+      // email: this.formBuilder.nonNullable.control('', {
+      //   validators: [Validators.required, Validators.email],
+      //   updateOn: 'blur',
+      // }),
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          createPasswordStrengthValidator(),
+        ],
+      ],
+    });
+
+  get email() {
+    return this.form.get('email') as FormControl;
+    // alternative way of getting form control
+    // return this.form.controls['email'] as FormControl;
   }
-
-  byEmailTDFChange(changeEvent: any) {
-  console.log('byEmailTDFChange',changeEvent)}
-
-  @ViewChild('tdfForm') tdfForm!: NgForm;
-  @ViewChild('tdfPassword') tdfPassword!: NgForm;
-
-  ngAfterViewChecked() {
-    console.log('tdfForm',this.tdfForm.controls.asd)
-    console.log('tdfPassword',this.tdfPassword)
-    console.log('emailTDFValue',this.emailTDFValue)
+  constructor(
+    private formBuilder: FormBuilder
+  ) // If all controls in your form are non nullable, you can use the non nullable form builder. Therefore, you can use reqular syntax
+  // ex: email: ['', { validators: [Validators.required, Validators.email], updateOn: 'blur' }]
+  // private nonNullableFormBuilder: NonNullableFormBuilder,
+  {
+    // Notice that using the form builder, we could also define an individual control.
+    // So we're using this control API.
+    // We simply will have to pass in here the initial form value and here we can pass an array of form validators
+    // or if we prefer, we can also pass in here a configuration object containing one of these free properties.
+    // formBuilder.control('', {
+    //   validators: [Validators.required],
+    // });
   }
+  // TDF APPROACH
+  // emailTDFValue = {
+  //   email: '',
+  //   password: ''
+  // }
 
+  // loginUserTdf(tdfForm:NgForm, submit:Event) {
+  //   console.log('tdfForm Submitted',tdfForm)
+  //   console.log('tdfForm submit event',submit)
+  // }
 
+  // byEmailTDFChange(changeEvent: any) {
+  // console.log('byEmailTDFChange',changeEvent)}
 }

@@ -1,11 +1,21 @@
 <div class="logo" fxHide.gt-xs>A</div>
 
 <div class="title">SIGN IN</div>
+
 <!-- RF APPROACH -->
-<!-- <form [formGroup]="form" (ngSubmit)="form.valid && loginUser()">
-  <fieldset [disabled]="loginLoading">
+<!-- <form [formGroup]="form" (ngSubmit)="form.valid && loginUser()"> -->
+<form [formGroup]="form">
+  <!-- <fieldset [disabled]="loginLoading"> -->
+  <fieldset>
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
+      <!-- Alternative way of defining form control -->
+      <!-- <input
+        matInput
+        type="email"
+        placeholder="Email"
+        [formControl]="email"
+      /> -->
       <input
         matInput
         type="email"
@@ -14,16 +24,24 @@
       />
 
       <mat-error
-        *ngIf="form.controls['email'].hasError('email')"
+        *ngIf="email.hasError('required')"
         class="form-control-feedback"
       >
-        Invalid Email
+        The email is mandatory
       </mat-error>
+
+      <mat-error *ngIf="email.hasError('minlength')">
+        Your email must have minimum
+        {{ email.errors?.minlength.requiredLength }} characters
+        but it only has
+        {{ email.errors?.minlength.actualLength }}
+      </mat-error>
+
       <mat-error
-        *ngIf="form.controls['email'].hasError('required')"
+        *ngIf="email.hasError('email')"
         class="form-control-feedback"
       >
-        Email is required
+        This is not a valid email
       </mat-error>
     </mat-form-field>
 
@@ -44,22 +62,78 @@
       </mat-error>
     </mat-form-field>
 
-    <button
+    <ng-container
+      *ngIf="
+        form.controls['password'].errors
+          | onlyOneError : ['minlength', 'passwordStrength'] as error
+      "
+    >
+      <div
+        class="field-message"
+        [ngStyle]="{
+          color: 'red',
+          fontSize: '75%',
+          marginTop: '-20px',
+          marginBottom: '-10px'
+        }"
+        *ngIf="error.minlength"
+      >
+        Your password must have minimum
+        {{ error.minlength.requiredLength }} characters but it only has
+        {{ error.minlength.actualLength }}
+      </div>
+      <div
+        class="field-message"
+        [ngStyle]="{
+          color: 'red',
+          fontSize: '75%',
+          marginTop: '-20px',
+          marginBottom: '-10px'
+        }"
+        *ngIf="error.passwordStrength"
+      >
+        Your password must have lower case, upper case and numeric characters!
+      </div>
+    </ng-container>
+
+    <!-- <button
       type="submit"
       [disabled]="loginLoading"
       mat-raised-button
       color="primary"
     >
       SIGN IN
+    </button> -->
+    <button
+      type="submit"
+      [disabled]="form.valid === false"
+      mat-raised-button
+      color="primary"
+    >
+      SIGN IN
     </button>
   </fieldset>
-</form> -->
+</form>
+<div>
+  {{ form.value | json }}
+</div>
+<div>
+  {{ form.valid }}
+</div>
+<div class="redirection">
+  <span class="text">Don't have an account?</span>
+  <a class="link" routerLink="/auth/register">Sign up</a>
+</div>
+
+<mat-spinner class="loading" [diameter]="25" *ngIf="loginLoading">
+</mat-spinner>
+
 <!-- TDF APPROACH -->
 <!-- Notes:
 1- one-way or two-way data binding is not related with handling the form. Instead, -->
-<form #tdfForm="ngForm" (ngSubmit)="loginUserTdf(tdfForm, $event)">
-  <!-- (ngSubmit): If you dont need $event, you can use 'click button' approach instead of (ngSubmit) approach -->
-  <fieldset [disabled]="loginLoading">
+<!-- <form #tdfForm="ngForm" (ngSubmit)="loginUserTdf(tdfForm, $event)"> -->
+<!-- (ngSubmit): If you dont need $event, you can use 'click button' approach instead of (ngSubmit) approach -->
+<!-- <fieldset [disabled]="loginLoading">
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
       <input
@@ -75,41 +149,31 @@
         [(ngModel)]="emailTDFValue.email"
         (ngModelChange)="byEmailTDFChange($event)"
         [ngModelOptions]="{ standalone: false, updateOn: 'change' }"
-      />
-      <!-- Additional Notes -->
-      <!-- 1- instead of name attribute:
+      /> -->
+<!-- Additional Notes -->
+<!-- 1- instead of name attribute:
         [ngModelOptions]="{ 'name:tdfEmail' }"
       -->
-      <!-- 2- pattern="[a-z]*" -->
-      <!-- 3- If _ngForm_ is used, all the input fields which have [(ngModel)]="" must have an attribute name with a value. We dont use 'name' attribute, it is just for data binding
+<!-- 2- pattern="[a-z]*" -->
+<!-- 3- If _ngForm_ is used, all the input fields which have [(ngModel)]="" must have an attribute name with a value. We dont use 'name' attribute, it is just for data binding
         Example 1: <input [(ngModel)]="person.firstName" name="first">
         Example 2: <input [(ngModel)]="person.firstName" [ngModelOptions]="{standalone: true}">
         * 'standalone: true' form control is disconnected from the parent ngForm so ngForm will not be able to track it. Most of the time, we dont use but maybe use case; to add a search input box in, say, a form that still has some validity rules but whose value is not getting included in the parent forum.
         Caution: name attribute is not related with #tdfEmail="ngModel".
         4- Those are the three things need to use ngModel inside a formGroup directive.
             Note that same name should be used for clearance but not mandatory!
-          name="country"
-          formControlName="country"
-          [(ngModel)]="country"
+          name="country" // for form control name
+          formControlName="country" // no need to use name attribute, it is redundant for reactive forms
+          [(ngModel)]="country" // for form control binding & property(one-way data-binding technique)/event binding
       -->
-      <!-- 4- _ngModel_ directice is used to bind the control to the form so the control can be tracked -->
+<!-- 4- _ngModel_ directice is used to bind the control to the form so the control can be tracked -->
 
-      <!-- <mat-error
-        *ngIf="form.controls['email'].hasError('email')"
-        class="form-control-feedback"
-      >
-        Invalid Email
-      </mat-error> -->
-      <!-- <mat-error
-        *ngIf="form.controls['email'].hasError('required')"
-        class="form-control-feedback"
-      >
-        Email is required
-      </mat-error> -->
-      <mat-error *ngIf="tdfEmail.errors?.required">
+<!-- _tdfEmail_ name attribute -->
+<!-- <mat-error *ngIf="tdfForm.controls['tdfEmail'].hasError('required')">
         The email is mandatory
-      </mat-error>
-      <mat-error *ngIf="tdfEmail.errors?.minlength">
+      </mat-error> -->
+<!-- _#tdfEmail_ Dom Element Reference -->
+<!-- <mat-error *ngIf="tdfEmail.errors?.minlength">
         Your email must have minimum
         {{ tdfEmail.errors?.minlength.requiredLength }} characters but it only
         has {{ tdfEmail.errors?.minlength.actualLength }}
@@ -132,13 +196,6 @@
         appPasswordStrength
         minlength="8"
       />
-
-      <!-- <mat-error
-        *ngIf="form.controls['password'].hasError('required')"
-        class="form-control-feedback"
-      >
-        Password is required
-      </mat-error> -->
       <mat-error *ngIf="tdfPassword.errors?.required">
         The password is mandatory</mat-error
       >
@@ -148,32 +205,41 @@
         tdfPassword.errors
           | onlyOneError : ['minlength', 'passwordStrength'] as error
       "
-    >
-      <!-- Notice that the required error is only going to be shown if something is
+    > -->
+<!-- Notice that the required error is only going to be shown if something is
     typed in at the level of the form field. So by its very nature, the
     required error will only show up if the other two errors are not
     present. So we only need to specify here really the priority between the
     minimum length error and the password strength error. -->
 
-      <div class="field-message" *ngIf="error.minlength">
+<!-- <div
+        class="field-message"
+        [ngStyle]="{
+          color: 'red',
+          fontSize: '75%',
+          marginTop: '-20px',
+          marginBottom: '-10px'
+        }"
+        *ngIf="error.minlength"
+      >
         Your password must have minimum
         {{ error.minlength.requiredLength }} characters but it only has
         {{ error.minlength.actualLength }}
       </div>
-      <div class="field-message" *ngIf="error.passwordStrength">
+      <div
+        class="field-message"
+        [ngStyle]="{
+          color: 'red',
+          fontSize: '75%',
+          marginTop: '-20px',
+          marginBottom: '-10px'
+        }"
+        *ngIf="error.passwordStrength"
+      >
         Your password must have lower case, upper case and numeric characters!
-      </div>
-      <!-- mat-form-field: It takes the input  and it projects it inside it via content projection in a certain way to its template so this causes to styles are not applied properly. To fix it, we separate ng-container from inside of mat-form-field and replace mat-error with div class="field-message" So this is no longer part of the material form, but we can still display messages to the user by this way! -->
-
-    </ng-container>
-    <!-- <button
-      type="submit"
-      [disabled]="loginLoading"
-      mat-raised-button
-      color="primary"
-    >
-      SIGN IN
-    </button> -->
+      </div> -->
+<!-- mat-form-field: It takes the input  and it projects it inside it via content projection in a certain way to its template so this causes to styles are not applied properly. To fix it, we separate ng-container from inside of mat-form-field and replace mat-error with div class="field-message" So this is no longer part of the material form, but we can still display messages to the user by this way! -->
+<!-- </ng-container>
     <button
       mat-raised-button
       color="primary"
@@ -183,16 +249,4 @@
       SIGN IN
     </button>
   </fieldset>
-</form>
-
-<div>
-  {{ tdfPassword.errors | json }}
-</div>
-
-<div class="redirection">
-  <span class="text">Don't have an account?</span>
-  <a class="link" routerLink="/auth/register">Sign up</a>
-</div>
-
-<mat-spinner class="loading" [diameter]="25" *ngIf="loginLoading">
-</mat-spinner>
+</form> -->
