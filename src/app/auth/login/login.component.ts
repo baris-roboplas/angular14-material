@@ -7,7 +7,7 @@ import {
   NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -124,9 +124,10 @@ export class LoginComponent {
     // return this.form.controls['email'] as FormControl;
   }
   constructor(
-    private formBuilder: FormBuilder
-  ) // If all controls in your form are non nullable, you can use the non nullable form builder. Therefore, you can use reqular syntax
-  // ex: email: ['', { validators: [Validators.required, Validators.email], updateOn: 'blur' }]
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute // If all controls in your form are non nullable, you can use the non nullable form builder. Therefore, you can use reqular syntax
+  ) // ex: email: ['', { validators: [Validators.required, Validators.email], updateOn: 'blur' }]
   // private nonNullableFormBuilder: NonNullableFormBuilder,
   {
     // Notice that using the form builder, we could also define an individual control.
@@ -150,4 +151,10 @@ export class LoginComponent {
 
   // byEmailTDFChange(changeEvent: any) {
   // console.log('byEmailTDFChange',changeEvent)}
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.router.navigate(['dashboard','course','detail']);
+    }, 1000);
+  }
 }

@@ -37,7 +37,7 @@ export class AppInterceptor implements HttpInterceptor {
     // headers = headers.set('MyCustomHeaderKey', `MyCustomHeaderValue`);
 
     return req.clone({
-      url: `${environment.backend.host}/${req.url}`,
+      url: `${environment.backend.host}${req.url}`,
       headers,
     });
   }

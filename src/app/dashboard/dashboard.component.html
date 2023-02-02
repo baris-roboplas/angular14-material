@@ -8,15 +8,17 @@
     </dl>
     <dl>
       <dt routerLink="/dashboard/movie" routerLinkActive="active">Movie</dt>
+    </dl><dl>
+      <dt routerLink="/dashboard/course" routerLinkActive="active">Course</dt>
     </dl>
     <dl class="submenu">
-      <dt>Product</dt>
+      <dt>SubMenu</dt>
       <dd>
-        <a routerLink="/dashboard/product" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          List
+        <a routerLink="/dashboard/SubItemList" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          SubItemList
         </a>
-        <a routerLink="/dashboard/product/detail" routerLinkActive="active">
-          Detalle
+        <a routerLink="/dashboard/SubItemList/SubItemDetail" routerLinkActive="active">
+          SubItemDetail
         </a>
       </dd>
     </dl>

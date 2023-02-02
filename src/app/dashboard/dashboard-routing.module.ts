@@ -29,9 +29,9 @@ export const DashboardRoutes: Routes = [
           import('./movie/movie.module').then((m) => m.MovieModule),
       },
       {
-        path: 'product',
+        path: 'course',
         loadChildren: () =>
-          import('./product/product.module').then((m) => m.ProductModule),
+          import('./course/course.module').then((m) => m.CourseModule),
       },
     ],
   },
