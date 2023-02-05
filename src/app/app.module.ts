@@ -6,8 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PasswordStrengthDirective } from './directives/password-strength.directive';
 import { OnlyOneErrorPipe } from './pipes/only-one-error.pipe';
-import { CourseResolver } from './services/course.resolver';
-import { CoursesService } from './services/courses.service';
+import { CourseResolver } from './dashboard/course/services/course.resolver';
+import { CoursesService } from './dashboard/course/services/courses.service';
 
 @NgModule({
   declarations: [AppComponent],

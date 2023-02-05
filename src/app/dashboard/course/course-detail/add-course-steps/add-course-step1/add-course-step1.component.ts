@@ -1,16 +1,19 @@
+import { filter, map, Observable } from 'rxjs';
+import { CourseCategory } from './model/course-category';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { conditionalValidator } from 'src/app/validators/conditionalValidator';
-import { CoursesService } from './../../../../../services/courses.service';
+import { CoursesService } from '../../../services/courses.service';
 import { courseTitleValidator } from 'src/app/validators/course-title.validator';
 
 /**
  * This component is step 1 form to be used to add a new course
  *
- * Keywords: reactive forms, asyncvalidator, conditionalValidator, pitfall
+ * Keywords: reactive forms, asyncValidator, conditionalValidator, pitfall
  *
  */
+
 @UntilDestroy()
 @Component({
   selector: 'app-add-course-step1',
@@ -45,6 +48,7 @@ export class AddCourseStep1Component implements OnInit {
         ),
       ],
     ],
+    category: ['BEGINNER', [Validators.required]],
     downloadsAllowed: [
       false,
       {
@@ -70,6 +74,9 @@ export class AddCourseStep1Component implements OnInit {
   get _releasedAt() {
     return this.form.get('releasedAt') as FormControl;
   }
+  get _category() {
+    return this.form.get('category') as FormControl;
+  }
   get _downloadsAllowed() {
     return this.form.get('downloadsAllowed') as FormControl;
   }
@@ -77,24 +84,34 @@ export class AddCourseStep1Component implements OnInit {
     return this.form.get('longDescription') as FormControl;
   }
 
+  courseCategories$!: Observable<CourseCategory[]>;
+
   constructor(
     private formBuilder: FormBuilder,
     private coursesService: CoursesService
   ) {}
 
   ngOnInit(): void {
+    this.courseCategories$ = this.coursesService.findCourseCategories();
+    this.downloadsAllowed_formControl_mandatoryConfirm_validator();
+    this.setDate_and_releasedAt_formControls_crossFieldValidator();
+    this.formDraftHandler();
+  }
+
+  // case: downloadsAllowed(controlForm) is mandatory to be checked if other fields are valid, otherwise it should be free to be unchecked or checked except submission attempt. If there is a submission attempt, the downloadsAllowed(controlForm) should be invalid and the error should be shown
+  downloadsAllowed_formControl_mandatoryConfirm_validator() {
     this.form.statusChanges.pipe(untilDestroyed(this)).subscribe(() => {
       // case: gather all formControls
-      let formControlsValidies = {};
+      let formControlsValidities = {};
       Object.entries(this.form.controls).forEach(([key, formControl]) => {
-        formControlsValidies = {
-          ...formControlsValidies,
+        formControlsValidities = {
+          ...formControlsValidities,
           [key]: formControl.valid,
         };
       });
       // case: check if all formControls are valid except downloadsAllowed(controlForm)
       let isFormValidExceptDownloadsAllowed = Object.entries(
-        formControlsValidies
+        formControlsValidities
       ).every(([key, value]) => {
         if (key === 'downloadsAllowed') return true;
         return value;
@@ -141,14 +158,31 @@ export class AddCourseStep1Component implements OnInit {
         return;
       }
     });
+  }
 
-    // case: if setDate is checked, releasedAt should be reset
+  // case: if setDate is checked, releasedAt(formControl)'s validity should be updated and also its value should be reset
+  setDate_and_releasedAt_formControls_crossFieldValidator() {
     this.form.controls.setDate.valueChanges
       .pipe(untilDestroyed(this))
-     // advice: as a last resort, use distinctUntilChanged to prevent Maximum call stack size exceeded when using valueChanges
+      // advice: as a last resort, use distinctUntilChanged to prevent Maximum call stack size exceeded when using valueChanges
       .subscribe((value) => {
         if (value) this._releasedAt.reset();
         this.form.controls.releasedAt.updateValueAndValidity();
+      });
+  }
+
+  formDraftHandler() {
+    const draft = localStorage.getItem('courseFormDraft-Step1');
+    if (draft) {
+      this.form.setValue(JSON.parse(draft));
+    }
+    this.form.valueChanges
+      .pipe(
+        untilDestroyed(this),
+        filter(() => this.form.valid)
+      )
+      .subscribe((value) => {
+        localStorage.setItem('courseFormDraft-Step1', JSON.stringify(value));
       });
   }
 }

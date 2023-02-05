@@ -1,6 +1,6 @@
 import { AbstractControl, AsyncValidatorFn } from '@angular/forms';
 import { map } from 'rxjs';
-import { CoursesService } from '../services/courses.service';
+import { CoursesService } from '../dashboard/course/services/courses.service';
 export function courseTitleValidator(
   coursesService: CoursesService
 ): AsyncValidatorFn {

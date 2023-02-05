@@ -9,6 +9,15 @@
       >This title is already being used.</mat-error
     >
   </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Select Category" formControlName="category">
+      <ng-container *ngFor="let category of (courseCategories$ | async)">
+        <mat-option [value]="category.code">
+          {{ category.description }}
+        </mat-option>
+      </ng-container>
+    </mat-select>
+  </mat-form-field>
   <mat-checkbox
     [ngStyle]="{ paddingTop: '5px', paddingBottom: '5px' }"
     color="primary"
@@ -61,6 +70,9 @@
 <div class="form-val">
   <hr />
   formvalid: {{ form.valid | json }}
+  <hr />
+  <hr />
+  formvalue: {{ form.value | json }}
   <hr />
   title valid: {{ _title.valid }}
   <hr />
