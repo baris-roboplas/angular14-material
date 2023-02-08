@@ -62,6 +62,7 @@ export class AddCourseStep1Component implements OnInit {
         updateOn: 'blur',
       },
     ],
+    address:[null, [Validators.required]]
   });
 
   // getters of formControls

@@ -32,15 +32,11 @@
 
       <mat-error *ngIf="email.hasError('minlength')">
         Your email must have minimum
-        {{ email.errors?.minlength.requiredLength }} characters
-        but it only has
+        {{ email.errors?.minlength.requiredLength }} characters but it only has
         {{ email.errors?.minlength.actualLength }}
       </mat-error>
 
-      <mat-error
-        *ngIf="email.hasError('email')"
-        class="form-control-feedback"
-      >
+      <mat-error *ngIf="email.hasError('email')" class="form-control-feedback">
         This is not a valid email
       </mat-error>
     </mat-form-field>

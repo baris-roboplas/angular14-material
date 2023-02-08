@@ -4,20 +4,30 @@
       <dt routerLink="/dashboard/home" routerLinkActive="active">Home</dt>
     </dl>
     <dl>
-      <dt routerLink="/dashboard/customer" routerLinkActive="active">Customer</dt>
+      <dt routerLink="/dashboard/customer" routerLinkActive="active">
+        Customer
+      </dt>
     </dl>
     <dl>
       <dt routerLink="/dashboard/movie" routerLinkActive="active">Movie</dt>
-    </dl><dl>
+    </dl>
+    <dl>
       <dt routerLink="/dashboard/course" routerLinkActive="active">Course</dt>
     </dl>
     <dl class="submenu">
       <dt>SubMenu</dt>
       <dd>
-        <a routerLink="/dashboard/SubItemList" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a
+          routerLink="/dashboard/SubItemList"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           SubItemList
         </a>
-        <a routerLink="/dashboard/SubItemList/SubItemDetail" routerLinkActive="active">
+        <a
+          routerLink="/dashboard/SubItemList/SubItemDetail"
+          routerLinkActive="active"
+        >
           SubItemDetail
         </a>
       </dd>
@@ -25,7 +35,6 @@
   </app-sidenav>
 
   <div class="wrapper">
-
     <app-toolbar (sidenavToggle)="onSidenavToggle()"></app-toolbar>
 
     <div class="content">
@@ -34,7 +43,6 @@
       </div>
 
       <app-footer></app-footer>
-
     </div>
   </div>
 </div>

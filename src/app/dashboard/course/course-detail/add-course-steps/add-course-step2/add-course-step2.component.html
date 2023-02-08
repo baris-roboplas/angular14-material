@@ -3,17 +3,42 @@
     <mat-radio-button value="free"> Free </mat-radio-button>
     <mat-radio-button value="premium"> Premium </mat-radio-button>
   </mat-radio-group>
-  <app-file-upload requiredFileType="image/png"></app-file-upload>
+
+  <!-- File Upload Component -->
+  <app-file-upload
+    requiredFileType="image/png"
+    formControlName="thumbnail"
+  ></app-file-upload>
+  <!-- File Upload Component -->
+  <!-- rating input-->
+  <app-rating-input
+    formControlName="freeExpectation"
+    label="Free Expectation"
+    [messages]="ratingMessage('freeExpectation')"
+  ></app-rating-input>
+  <app-rating-input
+    formControlName="freePlusPremiumExpectations"
+    label="Free + Premium Expectations"
+    [messages]="ratingMessage('freePlusPremiumExpectations')"
+  ></app-rating-input>
+  <!-- rating input-->
+
   <mat-form-field>
     <input matInput type="number" placeholder="Price" formControlName="price" />
   </mat-form-field>
   <mat-form-field>
     <mat-label>Promotional Period</mat-label>
     <mat-date-range-input [rangePicker]="promoPicker">
-      <input matStartDate placeholder="Start date" formControlName="promoStartAt"/>
-      <input matEndDate placeholder="End date" formControlName="promoEndAt"/>
+      <input
+        matStartDate
+        placeholder="Start date"
+        formControlName="promoStartAt"
+      />
+      <input matEndDate placeholder="End date" formControlName="promoEndAt" />
     </mat-date-range-input>
-    <mat-error *ngIf="form.errors?.promoPeriod && form.dirty"> The start date must be before the end date</mat-error>
+    <mat-error *ngIf="form.errors?.promoPeriod && form.dirty">
+      The start date must be before the end date</mat-error
+    >
     <mat-datepicker-toggle
       matSuffix
       [for]="promoPicker"
@@ -22,6 +47,12 @@
   </mat-form-field>
 </div>
 
+<div class="form-val">Form validity state: {{ form.valid }}</div>
+
 <div class="form-val">
   {{ form.value | json }}
+</div>
+
+<div class="form-val">
+  thumbnail errors: {{ form.controls.thumbnail.errors | json }}
 </div>

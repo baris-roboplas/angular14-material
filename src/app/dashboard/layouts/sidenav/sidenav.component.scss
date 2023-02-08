@@ -18,7 +18,8 @@ $color: rgba(255, 255, 255, 0.87);
   min-width: 280px;
   overflow: auto;
   overflow-x: hidden;
-  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 0px 2px 2px rgba(0, 0, 0, 0.098), 0px 0px 5px 1px rgba(0, 0, 0, 0.084);
+  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 0px 2px 2px rgba(0, 0, 0, 0.098), 0px 0px 5px 1px rgba(0, 0, 0, 0.084);
   transition: width 0.35s, min-width 0.35s;
 
   ::ng-deep {
@@ -30,7 +31,8 @@ $color: rgba(255, 255, 255, 0.87);
       justify-content: space-between;
       background-color: lighten($primary, 4%);
       color: $color;
-      box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+        0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 
       .mat-toolbar-row {
         justify-content: space-between;
@@ -47,13 +49,13 @@ $color: rgba(255, 255, 255, 0.87);
             margin-left: 12px;
             font-size: 16px;
             font-weight: 400;
-            letter-spacing: .4px;
+            letter-spacing: 0.4px;
             line-height: normal;
           }
         }
 
         button {
-          color: rgba(255,255,255,.7)!important;
+          color: rgba(255, 255, 255, 0.7) !important;
         }
       }
     }
@@ -88,7 +90,7 @@ $color: rgba(255, 255, 255, 0.87);
             justify-content: space-between;
 
             &:after {
-              font-family: 'Material Icons';
+              font-family: "Material Icons";
               content: "expand_more";
               transition: all 0.4s ease;
               display: flex;
@@ -105,7 +107,7 @@ $color: rgba(255, 255, 255, 0.87);
             a {
               color: rgba(255, 255, 255, 0.87);
               display: block;
-              letter-spacing: .1px;
+              letter-spacing: 0.1px;
               overflow: hidden;
               padding: 16px;
               padding-left: 18px;

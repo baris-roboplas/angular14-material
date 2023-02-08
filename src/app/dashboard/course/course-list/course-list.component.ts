@@ -6,6 +6,4 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './course-list.component.html',
   styleUrls: ['./course-list.component.scss'],
 })
-export class CourseListComponent  {
-
-}
+export class CourseListComponent {}

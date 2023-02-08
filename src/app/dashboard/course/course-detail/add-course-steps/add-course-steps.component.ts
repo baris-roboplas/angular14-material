@@ -7,15 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-course-steps.component.scss'],
   providers: [
     {
-      provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true },
-    }
-  ]
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { showError: true },
+    },
+  ],
 })
 export class AddCourseStepsComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

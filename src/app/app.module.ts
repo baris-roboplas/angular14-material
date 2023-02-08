@@ -14,12 +14,9 @@ import { CoursesService } from './dashboard/course/services/courses.service';
   imports: [
     BrowserModule,
     AppRoutingModule, // Main routes for application
-    CoreModule, // Singleton objects (services, components and resources that are loaded only at app.module level)
+    CoreModule, // Singleton objects (services, components and resources that are loaded only at app.module level),
   ],
-  providers: [
-    CoursesService,
-    CourseResolver
-],
+  providers: [CoursesService, CourseResolver],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

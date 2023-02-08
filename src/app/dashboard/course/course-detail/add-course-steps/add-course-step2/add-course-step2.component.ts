@@ -10,6 +10,7 @@ import { createPromoDateRangeValidator } from 'src/app/validators/promo-date-ran
   styleUrls: ['./add-course-step2.component.scss'],
 })
 export class AddCourseStep2Component implements OnInit {
+  instructor = "Peace's";
   form = this.formBuilder.group(
     {
       courseType: ['premium', Validators.required],
@@ -24,8 +25,11 @@ export class AddCourseStep2Component implements OnInit {
           ],
         },
       ],
+      thumbnail: [null],
       promoStartAt: [null],
       promoEndAt: [null],
+      freeExpectation: [{ value: 3, disabled: false }],
+      freePlusPremiumExpectations: [{ value: 5, disabled: true }],
     },
     {
       validators: [createPromoDateRangeValidator()],
@@ -48,12 +52,38 @@ export class AddCourseStep2Component implements OnInit {
 
   courseType_and_price_controlForms_crossField_disability_controller() {
     this.form.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+      // caution: && this._price?.enabled is a must to prevent infinite loop
       if (value.courseType === 'free' && this._price?.enabled) {
         this._price?.disable({ emitEvent: false });
         this._price?.reset(null, { emitEvent: false });
+        this.form.get('freePlusPremiumExpectations')?.disable({ emitEvent: false });
       } else if (value.courseType === 'premium' && this._price?.disabled) {
         this._price?.enable({ emitEvent: false });
+        this.form.get('freePlusPremiumExpectations')?.enable({ emitEvent: false });
       }
+
+
     });
+  }
+
+  // example method to send the star component dynamic messaging
+
+  ratingMessage(ratingName: string) {
+    let messages: any = {};
+    messages['freeExpectation'] = [
+      `${this.instructor} course was gross!`,
+      `${this.instructor} course was pretty bad.`,
+      `${this.instructor} course was acceptable.`,
+      `${this.instructor} course was pretty good.`,
+      `${this.instructor} course was great!`,
+    ];
+    messages['freePlusPremiumExpectations'] = [
+      `${this.instructor} course was unacceptable!`,
+      `I couldn't learn the course at ${this.instructor}.`,
+      `${this.instructor} course was acceptable.`,
+      `${this.instructor} course was yummy.`,
+      `${this.instructor} course is great!`,
+    ];
+    return messages[ratingName];
   }
 }

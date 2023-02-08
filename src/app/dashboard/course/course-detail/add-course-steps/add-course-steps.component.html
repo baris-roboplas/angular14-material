@@ -6,7 +6,7 @@
     labelPosition="bottom"
     [linear]="false"
   >
-  <!-- todo: linear true yap development sonrası -->
+    <!-- todo: linear true yap development sonrası -->
     <mat-step [stepControl]="step1.form" errorMessage="Landing page in error">
       <ng-template matStepLabel>Course Landing Page Details</ng-template>
       <app-add-course-step1 #step1></app-add-course-step1>
@@ -18,7 +18,7 @@
     </mat-step>
     <mat-step errorMessage="Pricing in error">
       <app-add-course-step2></app-add-course-step2>
-      <ng-template matStepLabel >Course Pricing Details</ng-template>
+      <ng-template matStepLabel>Course Pricing Details</ng-template>
       <div class="stepper-buttons">
         <button mat-raised-button color="primary" matStepperPrevious>
           Back to Step 1

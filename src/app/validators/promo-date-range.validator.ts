@@ -1,8 +1,4 @@
-import {
-  AbstractControl,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, ValidatorFn, Validators } from '@angular/forms';
 
 export function createPromoDateRangeValidator(): ValidatorFn {
   return (form: AbstractControl): Validators | null => {

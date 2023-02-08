@@ -8,6 +8,8 @@ import { AddCourseStep2Component } from './course-detail/add-course-steps/add-co
 import { AddCourseStep3Component } from './course-detail/add-course-steps/add-course-step3/add-course-step3.component';
 import { AddCourseStepsComponent } from './course-detail/add-course-steps/add-course-steps.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
+import { AddressFormComponent } from '../address-form/address-form.component';
+import { RatingInputComponent } from '../rating-input/rating-input.component';
 
 const routes: Routes = [
   {
@@ -36,6 +38,8 @@ export class CourseRoutingModule {
     AddCourseStep1Component,
     AddCourseStep2Component,
     AddCourseStep3Component,
-    FileUploadComponent
+    FileUploadComponent,
+    AddressFormComponent,
+    RatingInputComponent
   ];
 }

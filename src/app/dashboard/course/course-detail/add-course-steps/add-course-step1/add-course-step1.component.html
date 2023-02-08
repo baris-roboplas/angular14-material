@@ -1,4 +1,7 @@
 <div [formGroup]="form">
+  <!-- Custom Form Example Start-->
+  <address-form legend="Address" formControlName="address"></address-form>
+  <!-- Custom Form Example End-->
   <mat-form-field>
     <input matInput placeholder="Course Title" formControlName="title" #title />
 
@@ -11,7 +14,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-select placeholder="Select Category" formControlName="category">
-      <ng-container *ngFor="let category of (courseCategories$ | async)">
+      <ng-container *ngFor="let category of courseCategories$ | async">
         <mat-option [value]="category.code">
           {{ category.description }}
         </mat-option>

@@ -28,7 +28,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
 /**
  * NgModule that includes all Material modules that are required to serve the demo-app.
  */
@@ -64,7 +64,7 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatToolbarModule,
     MatTooltipModule,
     MatNativeDateModule,
-    MatStepperModule
+    MatStepperModule,
   ],
 })
 export class MaterialModule {}

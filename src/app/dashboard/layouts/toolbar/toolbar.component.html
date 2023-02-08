@@ -5,7 +5,15 @@
     </button>
 
     <button fxHide.lt-md mat-raised-button class="warn-A400 u-margin-l-8">
-      <mat-icon style="font-size: 18px; height: 18px; width: 24px; color: rgba(0,0,0,.54);">dashboard</mat-icon>
+      <mat-icon
+        style="
+          font-size: 18px;
+          height: 18px;
+          width: 24px;
+          color: rgba(0, 0, 0, 0.54);
+        "
+        >dashboard</mat-icon
+      >
       Material Theme - Angular v14.0.0
     </button>
 
@@ -13,13 +21,18 @@
 
     <div class="user-menu">
       <button mat-button [matMenuTriggerFor]="menu">
-        <img src="assets/images/avatars/profile.jpg" alt="User Image">
+        <img src="assets/images/avatars/profile.jpg" alt="User Image" />
         <span fxHide.lt-md>Administrator</span>
         <mat-icon fxHide.lt-sm>keyboard_arrow_down</mat-icon>
       </button>
 
-      <mat-menu #menu="matMenu" [overlapTrigger]="false" xPosition="before" yPosition="above">
-        <button mat-menu-item style="min-width: 194px;">
+      <mat-menu
+        #menu="matMenu"
+        [overlapTrigger]="false"
+        xPosition="before"
+        yPosition="above"
+      >
+        <button mat-menu-item style="min-width: 194px">
           <mat-icon> person </mat-icon>
           <span> Profile </span>
         </button>
@@ -36,16 +49,21 @@
     </div>
 
     <button mat-button [matMenuTriggerFor]="menuLanguage" class="settings">
-      <img src="assets/images/flags/us.png" style="margin-right: 8px;">
+      <img src="assets/images/flags/us.png" style="margin-right: 8px" />
       <span>EN</span>
     </button>
-    <mat-menu #menuLanguage="matMenu" [overlapTrigger]="false" xPosition="before" yPosition="above">
+    <mat-menu
+      #menuLanguage="matMenu"
+      [overlapTrigger]="false"
+      xPosition="before"
+      yPosition="above"
+    >
       <button mat-menu-item>
-        <img src="assets/images/flags/us.png" style="margin-right: 8px;">
+        <img src="assets/images/flags/us.png" style="margin-right: 8px" />
         <span>EN</span>
       </button>
       <button mat-menu-item>
-        <img src="assets/images/flags/tr.png" style="margin-right: 8px;">
+        <img src="assets/images/flags/tr.png" style="margin-right: 8px" />
         <span>TR</span>
       </button>
     </mat-menu>
