@@ -11,24 +11,24 @@
     <dl>
       <dt routerLink="/dashboard/movie" routerLinkActive="active">Movie</dt>
     </dl>
-    <dl>
+    <!-- <dl>
       <dt routerLink="/dashboard/course" routerLinkActive="active">Course</dt>
-    </dl>
+    </dl> -->
     <dl class="submenu">
-      <dt>SubMenu</dt>
+      <dt>Course</dt>
       <dd>
         <a
-          routerLink="/dashboard/SubItemList"
+          routerLink="/dashboard/course"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          SubItemList
+          Course List
         </a>
-        <a
-          routerLink="/dashboard/SubItemList/SubItemDetail"
-          routerLinkActive="active"
-        >
-          SubItemDetail
+        <a routerLink="/dashboard/course/details" routerLinkActive="active">
+          Add/Update Course
+        </a>
+        <a routerLink="/dashboard/course/search-lessons" routerLinkActive="active">
+          Search Lessons
         </a>
       </dd>
     </dl>

@@ -10,10 +10,14 @@ import { FileUploadPreviewComponent } from './components/file-upload-preview/fil
 import { DndDirective } from './components/file-upload-preview/dnd.directive';
 import { ConfirmDialogComponent } from './utils/dialogs/confirm-dialog/confirm-dialog.component';
 import { AlertDialogComponent } from './utils/dialogs/alert-dialog/alert-dialog.component';
+import { SafeUrlPipe } from '../pipes/safe-url.pipe';
+import { OnlyOneErrorPipe } from '../pipes/only-one-error.pipe';
 const COMPONENTS = [
   AlertDialogComponent,
   ConfirmDialogComponent,
   FileUploadPreviewComponent,
+  SafeUrlPipe,
+  OnlyOneErrorPipe,
 ];
 
 @NgModule({

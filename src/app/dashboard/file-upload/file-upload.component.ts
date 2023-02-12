@@ -8,10 +8,10 @@ import {
 } from '@angular/forms';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { catchError, finalize, of } from 'rxjs';
+import { catchError, finalize, of, map, tap } from 'rxjs';
 
 /**
- *Keywords: file, upload, fileUpload, custom form components
+ * Keywords: file, upload, fileUpload, custom form controls
  *
  * Each firm property is going to have a control value accessor associated to it. The association is made by directives that are part of the angular forms module. Some are built in and some are custom like the case of our file upload component, so each property has a control value accessor. In order to make the component behave as though it were a native input (and thus, a true custom form control), we need to tell Angular how to do a few things:
  *
@@ -31,7 +31,7 @@ import { catchError, finalize, of } from 'rxjs';
  *
  * we get access to a function in the argument that can be saved to a local variable. Then this function can be called when there are any changes in the value of our custom form control
  *
- * @function registerOnTouched(): Register a function to tell Angular when the input has been touched. When the element is touched, this method will get called
+ * @function registerOnTouched(): Register a function to tell Angular when the input has been touched. When    the element is touched, this method will get called
  *
  * we get access to another function that can be used to update the state of the form to touched. So when the user interacts with our custom form element, we can call the saved function to let Angular know that the element has been interacted with
  *
@@ -68,6 +68,8 @@ export class FileUploadComponent
 
   fileName = '';
 
+  isFileExtensionValid!: boolean;
+
   fileUploadError = false;
 
   fileUploadSuccess = false;
@@ -78,12 +80,20 @@ export class FileUploadComponent
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {
-    let test = 'test1';
+  ngOnInit(): void {}
+
+  fileExtensionChecker() {
+    const extensions = ['jpg', 'jpeg', 'bmp', 'gif', 'png'];
+    let splittedFileName = this.fileName.split('.');
+    let extension = splittedFileName[splittedFileName.length - 1];
+
+    if (!extensions.includes(extension)) {
+      this.isFileExtensionValid = false;
+    } else this.isFileExtensionValid = true;
   }
 
   byClickingFileInput(fileUpload: HTMLInputElement) {
-    this._onTouched();
+    // this._onTouched(); no need here
     fileUpload.click();
   }
 
@@ -104,41 +114,50 @@ export class FileUploadComponent
       // note: The append() method appends a new value onto an existing key inside a FormData object, or adds the key if it does not already exist.
       formData.append('thumbnail', file);
 
-      this.fileUploadError = false;
-
-      this.http
-        .post('/api/thumbnail-upload', formData, {
-          reportProgress: true,
-          observe: 'events',
-        })
-        .pipe(
-          catchError((err) => {
-            this.fileUploadError = true;
-            // semi-alternative: throwError
-            return of(err);
-          }),
-          finalize(() => {
-            this.uploadProgress = null;
+      // do not post if the file extension is invalid
+      this.fileExtensionChecker();
+      this.onValidatorChange();
+      if (this.isFileExtensionValid) {
+        this.http
+          .post('/api/thumbnail-upload', formData, {
+            reportProgress: true,
+            observe: 'events',
           })
-        )
-        .subscribe((event) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            this.uploadProgress = Math.round(
-              (100 * event.loaded) / event.total
-            );
-          } else if (event.type === HttpEventType.Response) {
-            this.fileUploadSuccess = true;
-            this._onChange(this.fileName);
-            this.onValidatorChange();
-            // this.onChange(event.body['filename']);
-          }
-        });
+          .pipe(
+            tap(() => (this.fileUploadError = false)),
+            catchError((err) => {
+              this.fileUploadError = true;
+              // todo: handle error angular university
+              // semi-alternative: throwError
+              return of(err);
+            }),
+            finalize(() => {
+              this.uploadProgress = null;
+              this._onTouched();
+              this._onChange(this.fileName);
+              this.onValidatorChange();
+            })
+          )
+          .subscribe((event) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.uploadProgress = Math.round(
+                (100 * event.loaded) / event.total
+              );
+            } else if (event.type === HttpEventType.Response) {
+              this.fileUploadSuccess = true;
+            }
+          });
+      } else {
+        this._onTouched();
+        this.onValidatorChange();
+      }
     }
   }
 
   /*
     Caution: These FOUR methods are meant to be called by the angular forms module only, are not meant to be called by as manually inside our component. So if you see code where these methods are being called manually, that is probably a mistake.
    */
+
   // First Method
   writeValue(value: any): void {
     this.fileName = value;
@@ -169,18 +188,73 @@ export class FileUploadComponent
   }
 
   validate(control: AbstractControl<any, any>): ValidationErrors | null {
-    if (this.fileUploadSuccess) {
+    // required
+    let errors: any = {
+      // requiredFileType: this.requiredFileType, // image/png note: i do not know where to use 'requiredFileType' , no example by the angular university instructor
+      required: true,
+    };
+
+    if (this.fileName) {
+      // wrongFileType
+      if (this.isFileExtensionValid === false) {
+        errors.wrongFileType = true;
+      }
+    }
+
+    if (!errors.wrongFileType && this.fileUploadSuccess) {
       return null;
     }
 
-    let errors: any = {
-      requiredFileType: this.requiredFileType,
-    };
-
+    // uploadFailed
     if (this.fileUploadError) {
-      errors.uploadFailed = true;
+      errors = {
+        uploadFailed: true,
+      };
     }
 
     return errors;
   }
 }
+// caution:
+// When you create a Control i.e. any type extending AbstractControl such as FormGroup, FormControl, ArrayControl…
+
+// They will be marked as dirty by default (unless of course you made your own implementation).
+
+// Therefore, when you create such a Control and assign them validators, those validators will be triggered at once.
+
+// For instance, assuming ErrorOnValidate is a validator which will always return an error, the following formGroup will immediately hold the errors returned by the validator.
+
+// const formGroup: FormGroup = new FormGroup(
+//       {
+//         key: new FormControl('value'),
+//       },
+//       {
+//         validators: [ErrorOnValidate],
+//       }
+//     );
+// console.log(formGroup.valid); /// false
+// How to prevent this behaviour ?
+
+// You need to create the form first, then set it as pristine and then only attach validators to that one.
+
+// const formGroup: FormGroup = new FormGroup(
+//       {
+//         key: new FormControl('value'),
+//       }
+//     );
+
+// formGroup.markAsPristine();
+
+// formGroup.setValidators([ErrorOnValidate]);
+
+// console.log(formGroup.valid); /// true
+
+// In this way, the formGroup will run the validator (and therefore in this example hold the validator's error) when a controller is touched.
+
+// But… Now you do have a FormGroup with values and validators which will not do anything until it is touched. However, as soon as you will bind this FormGroup with a input, the input will touch the control and therefore trigger the validations, meaning all this effort is lost.
+
+// An alternative is to create a FormControl without any validators and to add those to the form only only once the view did init.
+
+// ngAfterViewInit(): void {
+//     this.formGroup.setValidators([ErrorOnValidate])
+// }

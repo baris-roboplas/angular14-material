@@ -3,11 +3,15 @@
   class="file-input"
   #fileUpload
   (change)="byFileSelected($event)"
+  [accept]="requiredFileType"
 />
 
+<!-- Note: we used this technique since styling native input element of type file is
+very hard. -->
 <div class="file-upload">
   <mat-form-field>
     <input matInput [disabled]="true" [value]="fileName" />
+    <!-- alternative: add attribute accept. example: accept="image/*" instead of [value]="fileName" -->
   </mat-form-field>
 
   <button

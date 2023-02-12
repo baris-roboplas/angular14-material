@@ -3,8 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Course } from '../model/course';
 import { map } from 'rxjs/operators';
-import { Lesson } from '../model/lesson';
 import { CourseCategories } from '../model/course-categories';
+import { Lesson } from '../lessons/models/lesson';
 
 @Injectable()
 export class CoursesService {

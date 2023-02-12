@@ -3,6 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { createPromoDateRangeValidator } from 'src/app/validators/promo-date-range.validator';
 
+/**
+ * #keywords: cross field validation, custom form control
+ *
+ * @export
+ * @class AddCourseStep2Component
+ * @implements {OnInit}
+ */
 @UntilDestroy()
 @Component({
   selector: 'app-add-course-step2',
@@ -13,7 +20,8 @@ export class AddCourseStep2Component implements OnInit {
   instructor = "Peace's";
   form = this.formBuilder.group(
     {
-      courseType: ['premium', Validators.required],
+      courseType: ['free', Validators.required],
+      // caution: When a form control is disabled, validation is not applied to that control.
       price: [
         null,
         {
@@ -34,6 +42,13 @@ export class AddCourseStep2Component implements OnInit {
     {
       validators: [createPromoDateRangeValidator()],
     }
+    // additional info:
+    // { validator: (group) => {
+    //   if (group.controls.user.value !== 'Admin') {
+    //     return Validators.required((group.controls.role);
+    //   }
+    //   return null;
+    // }
   );
 
   // getters of formControls
@@ -44,25 +59,44 @@ export class AddCourseStep2Component implements OnInit {
     return this.form.get('price') as FormControl;
   }
 
+  get _thumbnail() {
+    return this.form.get('thumbnail') as FormControl;
+  }
+
+  get _promoStartAt() {
+    return this.form.get('promoStartAt') as FormControl;
+  }
+  get _promoEndAt() {
+    return this.form.get('promoEndAt') as FormControl;
+  }
+  get _freeExpectation() {
+    return this.form.get('freeExpectation') as FormControl;
+  }
+  get _freePlusPremiumExpectations() {
+    return this.form.get('freePlusPremiumExpectations') as FormControl;
+  }
+
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.courseType_and_price_controlForms_crossField_disability_controller();
+    this.courseType_and_price_controls_crossField_disability_controller();
   }
 
-  courseType_and_price_controlForms_crossField_disability_controller() {
+  courseType_and_price_controls_crossField_disability_controller() {
     this.form.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
       // caution: && this._price?.enabled is a must to prevent infinite loop
       if (value.courseType === 'free' && this._price?.enabled) {
         this._price?.disable({ emitEvent: false });
         this._price?.reset(null, { emitEvent: false });
-        this.form.get('freePlusPremiumExpectations')?.disable({ emitEvent: false });
+        this.form
+          .get('freePlusPremiumExpectations')
+          ?.disable({ emitEvent: false });
       } else if (value.courseType === 'premium' && this._price?.disabled) {
         this._price?.enable({ emitEvent: false });
-        this.form.get('freePlusPremiumExpectations')?.enable({ emitEvent: false });
+        this.form
+          .get('freePlusPremiumExpectations')
+          ?.enable({ emitEvent: false });
       }
-
-
     });
   }
 
@@ -85,5 +119,9 @@ export class AddCourseStep2Component implements OnInit {
       `${this.instructor} course is great!`,
     ];
     return messages[ratingName];
+  }
+
+  ngAfterViewInit() {
+    console.log(this.form);
   }
 }

@@ -1,5 +1,5 @@
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-add-course-steps',
@@ -13,7 +13,15 @@ import { Component, OnInit } from '@angular/core';
   ],
 })
 export class AddCourseStepsComponent implements OnInit {
+  @ViewChild('step2') step2: any;
   constructor() {}
 
   ngOnInit(): void {}
+  validityCheckByNextStep() {
+    this.step2.form.controls.thumbnail.touched = true;
+  }
+
+  submit(step1: any, step2: any, step3: any) {
+    console.log('submit', step1, step2, step3);
+  }
 }

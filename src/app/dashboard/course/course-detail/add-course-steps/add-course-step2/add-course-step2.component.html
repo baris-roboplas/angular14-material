@@ -6,9 +6,24 @@
 
   <!-- File Upload Component -->
   <app-file-upload
+    matInput
     requiredFileType="image/png"
     formControlName="thumbnail"
   ></app-file-upload>
+  <mat-error>
+    <ng-container
+      *ngIf="
+        _thumbnail.touched && _thumbnail.errors
+          | onlyOneError
+            : ['uploadFailed', 'wrongFileType', 'required'] as error
+      "
+    >
+    <div *ngIf="error.uploadFailed">thumbnail upload failed</div>
+    <div *ngIf="error.wrongFileType">thumbnail wrongFileType</div>
+    <div *ngIf="error.required">thumbnail required</div>
+    </ng-container>
+  </mat-error>
+
   <!-- File Upload Component -->
   <!-- rating input-->
   <app-rating-input
@@ -39,6 +54,10 @@
     <mat-error *ngIf="form.errors?.promoPeriod && form.dirty">
       The start date must be before the end date</mat-error
     >
+    <!-- better approach -->
+    <!-- The 'mat-date-range-input' already has a validator implemented on it to check if the endDate is higher than the startDate and it returns 'matEndDateInvalid'. -->
+    <mat-error *ngIf="_promoEndAt.errors?.matEndDateInvalid">Invalid End Date</mat-error>
+
     <mat-datepicker-toggle
       matSuffix
       [for]="promoPicker"
@@ -55,4 +74,8 @@
 
 <div class="form-val">
   thumbnail errors: {{ form.controls.thumbnail.errors | json }}
+</div>
+
+<div class="form-val">
+  thumbnail touched: {{ form.controls.thumbnail.touched }}
 </div>

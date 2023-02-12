@@ -1,3 +1,4 @@
+import { LessonsComponent } from './lessons/lessons.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -16,14 +17,15 @@ const routes: Routes = [
     path: '',
     component: CourseListComponent,
   },
-  // {
-  //   path: '',
-  //   component: CourseDetailComponent,
-  // },
   {
-    path: 'detail',
+    path: 'details',
     component: CourseDetailComponent,
   },
+  {
+    path: 'search-lessons',
+    component: LessonsComponent,
+  },
+
 ];
 
 @NgModule({
@@ -40,6 +42,6 @@ export class CourseRoutingModule {
     AddCourseStep3Component,
     FileUploadComponent,
     AddressFormComponent,
-    RatingInputComponent
+    RatingInputComponent,
   ];
 }

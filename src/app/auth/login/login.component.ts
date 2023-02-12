@@ -17,9 +17,7 @@ import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { createPasswordStrengthValidator } from 'src/app/validators/password-strength.validator';
 
 /**
- * Reactive Forms vs Template Driven Forms (TDF; basic features, custom validation included)
- *
- * @class LoginComponent
+ * @keywords Reactive Forms vs Template Driven Forms (TDF; basic features, custom validation included)
  */
 @Component({
   selector: 'app-login',
@@ -153,7 +151,7 @@ export class LoginComponent {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.router.navigate(['dashboard', 'course', 'detail']);
+      this.router.navigate(['dashboard', 'course']);
     }, 1000);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -6,11 +6,19 @@ import {
   FormGroup,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
+  ValidationErrors,
   Validator,
   Validators,
 } from '@angular/forms';
 import { noop, Subscription } from 'rxjs';
 
+/**
+ * Keywords: nested forms, custom form controls
+ *
+ * hint: registerOnChange(onChange: any) {
+    this.onChangeSub = this.form.valueChanges.subscribe(onChange); // alternative: subscribe(value=>onChange(value))
+  }
+ */
 @Component({
   selector: 'address-form',
   templateUrl: './address-form.component.html',
@@ -21,9 +29,16 @@ import { noop, Subscription } from 'rxjs';
       multi: true,
       useExisting: AddressFormComponent,
     },
+    {
+      provide: NG_VALIDATORS,
+      multi: true,
+      useExisting: AddressFormComponent,
+    },
   ],
 })
-export class AddressFormComponent implements ControlValueAccessor, OnDestroy {
+export class AddressFormComponent
+  implements ControlValueAccessor, OnDestroy, Validator
+{
   @Input()
   legend!: string;
 
@@ -63,5 +78,16 @@ export class AddressFormComponent implements ControlValueAccessor, OnDestroy {
     } else {
       this.form.enable();
     }
+  }
+
+  validate(c: AbstractControl): ValidationErrors | null {
+    return this.form.valid
+      ? null
+      : {
+          invalidForm: {
+            valid: false,
+            message: 'Custom error message',
+          },
+        };
   }
 }

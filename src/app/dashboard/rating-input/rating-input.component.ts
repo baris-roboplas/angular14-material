@@ -8,6 +8,11 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+/**
+ * Keywords: custom form controls
+ *
+ * hint: I recommend you to stop giving default values to these control value accessor handlers
+ */
 @Component({
   selector: 'app-rating-input',
   templateUrl: './rating-input.component.html',

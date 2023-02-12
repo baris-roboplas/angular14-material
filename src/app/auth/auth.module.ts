@@ -9,7 +9,6 @@ import { AuthRoutingModule } from './auth-routing.module';
   declarations: [
     ...AuthRoutingModule.components,
     PasswordStrengthDirective,
-    OnlyOneErrorPipe,
   ],
   imports: [SharedModule, AuthRoutingModule],
 })

@@ -4,4 +4,5 @@ export interface Lesson {
   duration: string;
   seqNo: number;
   courseId: number;
+  videoId: string;
 }
