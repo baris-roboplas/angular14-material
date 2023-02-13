@@ -1,4 +1,3 @@
-
 // https://stackblitz.com/edit/input-star-rating-kxdzwb?file=src%2Finput-stars%2Finput-stars.component.ts,src%2Finput-stars%2Finput-stars.component.html
 // import {
 //   Component,

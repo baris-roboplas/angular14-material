@@ -25,7 +25,12 @@
         <button mat-raised-button color="primary" matStepperPrevious>
           Back to Step 1
         </button>
-        <button mat-raised-button color="primary" matStepperNext (click)="validityCheckByNextStep()">
+        <button
+          mat-raised-button
+          color="primary"
+          matStepperNext
+          (click)="validityCheckByNextStep()"
+        >
           Continue to Step 3
         </button>
       </div>
@@ -41,7 +46,7 @@
         <button
           mat-raised-button
           color="primary"
-          [disabled]="step3.form.invalid || step3._lessons.length===0"
+          [disabled]="step3.form.invalid || step3._lessons.length === 0"
           (click)="submit(step1.form.value, step2.form.value, step3.form.value)"
         >
           Save Course

@@ -62,7 +62,7 @@ export class AddCourseStep1Component implements OnInit {
         updateOn: 'blur',
       },
     ],
-    address:[null, [Validators.required]]
+    address: [null, [Validators.required]],
   });
 
   // getters of formControls
@@ -186,18 +186,18 @@ export class AddCourseStep1Component implements OnInit {
         localStorage.setItem('courseFormDraft-Step1', JSON.stringify(value));
       });
 
-      // advice
-      // The issue is that if you have your form already saved on localstorage and then change the title, the new title is not saved on draft (not updated on local storage). This only happens with the title. I guess that is why Vimal concluded this issue is related to the async validator. I think he is right.
+    // advice
+    // The issue is that if you have your form already saved on localstorage and then change the title, the new title is not saved on draft (not updated on local storage). This only happens with the title. I guess that is why Vimal concluded this issue is related to the async validator. I think he is right.
 
-      // combineLatest([
-      //   this.form.valueChanges,
-      //   this.form.statusChanges
-      // ]).pipe(
-      //   filter(([val, status]) => status === 'VALID'),
-      //   map(([val, status]) => val),
-      //   distinctUntilChanged(),
-      // ).subscribe((val) => {
-      //   localStorage.setItem('STEP_1', JSON.stringify(val));
-      // });
+    // combineLatest([
+    //   this.form.valueChanges,
+    //   this.form.statusChanges
+    // ]).pipe(
+    //   filter(([val, status]) => status === 'VALID'),
+    //   map(([val, status]) => val),
+    //   distinctUntilChanged(),
+    // ).subscribe((val) => {
+    //   localStorage.setItem('STEP_1', JSON.stringify(val));
+    // });
   }
 }

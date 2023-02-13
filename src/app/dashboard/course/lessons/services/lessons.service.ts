@@ -7,10 +7,6 @@ import { Lesson } from '../models/lesson';
   providedIn: 'root',
 })
 export class LessonsService {
-  // private _listSearchResultsSubject$ = new BehaviorSubject<any>(null);
-  // public listSearchResultsObs$: Observable<any> =
-  //   this._listSearchResultsSubject$;
-
   constructor(private http: HttpClient) {}
 
   searchLessons(search: string) {

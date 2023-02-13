@@ -124,9 +124,8 @@ export class LoginComponent {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute // If all controls in your form are non nullable, you can use the non nullable form builder. Therefore, you can use reqular syntax // ex: email: ['', { validators: [Validators.required, Validators.email], updateOn: 'blur' }]
-  ) // private nonNullableFormBuilder: NonNullableFormBuilder,
-  {
+    private route: ActivatedRoute // If all controls in your form are non nullable, you can use the non nullable form builder. Therefore, you can use reqular syntax // ex: email: ['', { validators: [Validators.required, Validators.email], updateOn: 'blur' }] // private nonNullableFormBuilder: NonNullableFormBuilder,
+  ) {
     // Notice that using the form builder, we could also define an individual control.
     // So we're using this control API.
     // We simply will have to pass in here the initial form value and here we can pass an array of form validators
@@ -151,7 +150,7 @@ export class LoginComponent {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.router.navigate(['dashboard', 'course']);
+      this.router.navigate(['dashboard', 'customer']);
     }, 1000);
   }
 }

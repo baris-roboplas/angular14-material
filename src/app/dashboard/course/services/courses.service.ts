@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { Course } from '../model/course';
 import { map } from 'rxjs/operators';
 import { CourseCategories } from '../model/course-categories';
@@ -56,5 +56,38 @@ export class CoursesService {
           .set('pageSize', pageSize.toString()),
       })
       .pipe(map((res) => res['payload'] as Lesson[]));
+  }
+
+  loadCourseById(courseId: number): Observable<Course> {
+    return this.http
+      .get<Course>(`/api/courses/${courseId}`)
+      .pipe(shareReplay());
+  }
+
+  loadAllCourseLessons(courseId: number): Observable<Lesson[]> {
+    return this.http
+      .get<Lesson[]>("/api/lessons", {
+        params: {
+          pageSize: "10000",
+          courseId: courseId.toString(),
+        },
+      })
+      .pipe(
+        map((res:any) => res["payload"]),
+        shareReplay()
+      );
+  }
+
+  loadAllCourses(): Observable<Course[]> {
+    return this.http.get<Course[]>("/api/courses").pipe(
+      map((res:any) => res["payload"]),
+      shareReplay()
+    );
+  }
+
+  saveCourse(courseId: string, changes: Partial<Course>): Observable<any> {
+    return this.http
+      .put(`/api/courses/${courseId}`, changes)
+      .pipe(shareReplay());
   }
 }

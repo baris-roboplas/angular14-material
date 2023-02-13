@@ -1,8 +1,8 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Observable, BehaviorSubject, of } from 'rxjs';
-import { Lesson } from '../model/lesson';
 import { CoursesService } from './courses.service';
 import { catchError, finalize } from 'rxjs/operators';
+import { Lesson } from '../lessons/models/lesson';
 
 export class LessonsDataSource implements DataSource<Lesson> {
   private lessonsSubject = new BehaviorSubject<Lesson[]>([]);

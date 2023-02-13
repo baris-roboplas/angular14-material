@@ -6,10 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
-  declarations: [
-    ...AuthRoutingModule.components,
-    PasswordStrengthDirective,
-  ],
+  declarations: [...AuthRoutingModule.components, PasswordStrengthDirective],
   imports: [SharedModule, AuthRoutingModule],
 })
 export class AuthModule {}

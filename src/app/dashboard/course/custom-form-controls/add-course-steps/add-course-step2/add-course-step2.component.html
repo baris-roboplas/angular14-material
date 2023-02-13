@@ -18,9 +18,9 @@
             : ['uploadFailed', 'wrongFileType', 'required'] as error
       "
     >
-    <div *ngIf="error.uploadFailed">thumbnail upload failed</div>
-    <div *ngIf="error.wrongFileType">thumbnail wrongFileType</div>
-    <div *ngIf="error.required">thumbnail required</div>
+      <div *ngIf="error.uploadFailed">thumbnail upload failed</div>
+      <div *ngIf="error.wrongFileType">thumbnail wrongFileType</div>
+      <div *ngIf="error.required">thumbnail required</div>
     </ng-container>
   </mat-error>
 
@@ -56,7 +56,9 @@
     >
     <!-- better approach -->
     <!-- The 'mat-date-range-input' already has a validator implemented on it to check if the endDate is higher than the startDate and it returns 'matEndDateInvalid'. -->
-    <mat-error *ngIf="_promoEndAt.errors?.matEndDateInvalid">Invalid End Date</mat-error>
+    <mat-error *ngIf="_promoEndAt.errors?.matEndDateInvalid"
+      >Invalid End Date</mat-error
+    >
 
     <mat-datepicker-toggle
       matSuffix

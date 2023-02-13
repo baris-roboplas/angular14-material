@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { LessonsService } from '../services/lessons.service';
 import { Lesson } from '../models/lesson';
 
@@ -10,6 +10,7 @@ import { Lesson } from '../models/lesson';
   selector: 'app-search-lessons',
   templateUrl: './search-lessons.component.html',
   styleUrls: ['./search-lessons.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchLessonsComponent implements OnInit {
   // note:

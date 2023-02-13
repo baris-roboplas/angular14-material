@@ -2,10 +2,12 @@
 
 <div class="add-lessons-form" [formGroup]="form">
   <ng-container formArrayName="lessons">
-    <ng-container *ngFor="let lessonForm of _lessonFormArrayControls; let i = index">
-    <div class="lesson-form-row" [formGroup]="lessonForm">
-    <!-- <ng-container *ngFor="let lessonForm of _lessons.controls; let i = index"> -->
-      <!-- alternative: <div class="lesson-form-row" [formGroupName]="i"> -->
+    <ng-container
+      *ngFor="let lessonForm of _lessonFormArrayControls; let i = index"
+    >
+      <div class="lesson-form-row" [formGroup]="lessonForm">
+        <!-- <ng-container *ngFor="let lessonForm of _lessons.controls; let i = index"> -->
+        <!-- alternative: <div class="lesson-form-row" [formGroupName]="i"> -->
         <mat-form-field appearance="fill">
           <input matInput formControlName="title" placeholder="Lesson title" />
         </mat-form-field>
@@ -24,7 +26,7 @@
       </div>
     </ng-container>
   </ng-container>
-  {{ form.value|json }}
+  {{ form.value | json }}
   <button mat-mini-fab (click)="addLesson()">
     <mat-icon class="add-course-btn">add</mat-icon>
   </button>
