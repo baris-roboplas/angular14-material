@@ -1,4 +1,4 @@
-import { MessagesComponent } from './../messages/messages.component';
+import { MessagesComponent } from '../../shared/components/messages/messages.component';
 import { LessonsComponent } from './lessons/lessons.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -7,7 +7,7 @@ import { CourseListComponent } from './course-list/course-list.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { CoursesCardListComponent } from './course-list/courses-card-list/courses-card-list.component';
 import { CourseDialogComponent } from './course-list/course-dialog/course-dialog.component';
-import { LoadingComponent } from '../loading/loading.component';
+import { LoadingComponent } from '../../shared/components/loading/loading.component';
 import { SearchLessonsComponent } from './lessons/search-lessons/search-lessons.component';
 import { LessonComponent } from './lessons/search-lessons/lesson/lesson.component';
 import { CourseComponent } from './course.component';
@@ -18,6 +18,7 @@ import { AddCourseStep3Component } from './custom-form-controls/add-course-steps
 import { AddCourseStepsComponent } from './custom-form-controls/add-course-steps/add-course-steps.component';
 import { AddressFormComponent } from './custom-form-controls/address-form/address-form.component';
 import { RatingInputComponent } from './custom-form-controls/rating-input/rating-input.component';
+import { CourseResolver } from './services/course.resolver';
 
 const routes: Routes = [
   {
@@ -25,8 +26,11 @@ const routes: Routes = [
     component: CourseListComponent,
   },
   {
-    path: 'details/:courseId',
+    path: 'details/:courseId', //caution: do not use path: ':courseId directly since it overrides others
     component: CourseDetailComponent,
+    resolve: {
+      course: CourseResolver,
+    },
   },
   {
     path: 'search-lessons',
@@ -41,6 +45,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [CourseResolver],
 })
 export class CourseRoutingModule {
   static components = [
@@ -48,8 +53,6 @@ export class CourseRoutingModule {
     CourseDetailComponent,
     CoursesCardListComponent,
     CourseDialogComponent,
-    LoadingComponent,
-    MessagesComponent,
     LessonsComponent,
     SearchLessonsComponent,
     LessonComponent,

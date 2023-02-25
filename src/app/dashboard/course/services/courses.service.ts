@@ -6,6 +6,9 @@ import { map } from 'rxjs/operators';
 import { CourseCategories } from '../model/course-categories';
 import { Lesson } from '../lessons/models/lesson';
 
+interface Courses {
+  payload: Course[];
+}
 @Injectable()
 export class CoursesService {
   constructor(private http: HttpClient) {
@@ -13,19 +16,23 @@ export class CoursesService {
   }
 
   findCourseById(courseId: number): Observable<Course> {
-    return this.http.get<Course>(`/api/courses/${courseId}`);
+    return this.http
+      .get<Course>(`/api/courses/${courseId}`)
+      .pipe(shareReplay());
   }
 
   findCourseCategories() {
-    return this.http
-      .get<CourseCategories>(`/api/course-categories`)
-      .pipe(map((res) => res['categories']));
+    return this.http.get<CourseCategories>(`/api/course-categories`).pipe(
+      map((res) => res['categories']),
+      shareReplay()
+    );
   }
 
   findAllCourses(): Observable<Course[]> {
-    return this.http
-      .get<any>('/api/courses')
-      .pipe(map((res) => res['payload'] as Course[]));
+    return this.http.get<Courses>('/api/courses').pipe(
+      map((res) => res['payload']),
+      shareReplay()
+    );
   }
 
   findAllCourseLessons(courseId: number): Observable<Lesson[]> {
@@ -36,7 +43,10 @@ export class CoursesService {
           .set('pageNumber', '0')
           .set('pageSize', '1000'),
       })
-      .pipe(map((res) => res['payload'] as Lesson[]));
+      .pipe(
+        map((res) => res['payload'] as Lesson[]),
+        shareReplay()
+      );
   }
 
   findLessons(
@@ -55,7 +65,10 @@ export class CoursesService {
           .set('pageNumber', pageNumber.toString())
           .set('pageSize', pageSize.toString()),
       })
-      .pipe(map((res) => res['payload'] as Lesson[]));
+      .pipe(
+        map((res) => res['payload'] as Lesson[]),
+        shareReplay()
+      );
   }
 
   loadCourseById(courseId: number): Observable<Course> {
@@ -66,21 +79,21 @@ export class CoursesService {
 
   loadAllCourseLessons(courseId: number): Observable<Lesson[]> {
     return this.http
-      .get<Lesson[]>("/api/lessons", {
+      .get<Lesson[]>('/api/lessons', {
         params: {
-          pageSize: "10000",
+          pageSize: '10000',
           courseId: courseId.toString(),
         },
       })
       .pipe(
-        map((res:any) => res["payload"]),
+        map((res: any) => res['payload']),
         shareReplay()
       );
   }
 
   loadAllCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>("/api/courses").pipe(
-      map((res:any) => res["payload"]),
+    return this.http.get<Course[]>('/api/courses').pipe(
+      map((res: any) => res['payload']),
       shareReplay()
     );
   }

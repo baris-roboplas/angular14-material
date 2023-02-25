@@ -3,8 +3,8 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Course, sortCoursesBySeqNo } from '../model/course';
 import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { LoadingService } from '../../loading/loading.service';
-import { MessagesService } from '../../messages/messages.service';
+import { LoadingService } from '../../../shared/components/loading/loading.service';
+import { MessagesService } from '../../../shared/components/messages/messages.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,31 +14,34 @@ export class CoursesStore {
 
   courses$: Observable<Course[]> = this.subject.asObservable();
 
-  constructor(private http: HttpClient) // private loading: LoadingService,
-  // private messages: MessagesService
-  {
+  constructor(
+    private http: HttpClient,
+    private loading: LoadingService,
+    private messages: MessagesService // private loading: LoadingService, // private messages: MessagesService
+  ) {
     this.loadAllCourses();
   }
 
-  private loadAllCourses() {
-    this.http.get<Course[]>('/api/courses').pipe(
+  loadAllCourses() {
+    let loadCourses$ = this.http.get<Course[]>('/api/courses').pipe(
       map((response: any) => {
         let test2 = 'test2';
         return response['payload'];
       }),
       catchError((err) => {
         const message = 'Could not load courses';
-        // this.messages.showErrors(message);
+        this.messages.showErrors(message);
         console.log(message, err);
         return throwError(err);
       }),
       tap((courses) => {
         this.subject.next(courses);
         let test = 'test1';
-      })
-    ).subscribe();
-
-    // this.loading.showLoaderUntilCompleted(loadCourses$).subscribe();
+      }),
+      shareReplay()
+    );
+    loadCourses$.subscribe();
+    this.loading.showLoaderUntilCompleted(loadCourses$).subscribe();
   }
 
   saveCourse(courseId: string, changes: Partial<Course>): Observable<any> {

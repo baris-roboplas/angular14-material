@@ -1,0 +1,28 @@
+<div class="card">
+  <div class="card-header card-header-danger">
+    <h4 class="card-title">{{ "Stock Locations" | translate }}</h4>
+    <a
+      class="pull-right"
+      *ngIf="Constants.Claims.StokYerleri.Kayit | claimCheck"
+      [routerLink]="Constants.Paths.StockLocations.AddPath()"
+    >
+      <i
+        class="fa-regular fa-square-plus fa-2x"
+        id="add"
+        style="color: white"
+        title="{{ 'Add' | translate }}"
+      ></i>
+    </a>
+  </div>
+  <div class="card-body">
+    <app-prime-table
+      [loading]="stockLocationsListloading$ | async"
+      [list]="stockLocationsList$ | async"
+      [columns]="cols"
+      [scrollHeight]="'450px'"
+      [tableName]="'Stok Yerleri'"
+      [contextMenuItems]="contextMenuItems"
+      (onContextMenuSelection)="onContextMenuSelection($event)"
+    ></app-prime-table>
+  </div>
+</div>

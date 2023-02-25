@@ -1,0 +1,28 @@
+<div class="card">
+  <div class="card-header card-header-danger">
+    <h4 class="card-title">{{ "Warehouses" | translate }}</h4>
+    <a
+      class="pull-right"
+      *ngIf="Constants.Claims.Depolar.Kayit | claimCheck"
+      [routerLink]="Constants.Paths.Warehouses.AddPath()"
+    >
+      <i
+        class="fa-regular fa-square-plus fa-2x"
+        id="add"
+        style="color: white"
+        title="{{ 'Add' | translate }}"
+      ></i>
+    </a>
+  </div>
+  <div class="card-body">
+    <app-prime-table
+      [loading]="warehouseListloading$ | async"
+      [list]="warehouseList$ | async"
+      [columns]="cols"
+      [scrollHeight]="'450px'"
+      [tableName]="'Depolar'"
+      [contextMenuItems]="contextMenuItems"
+      (onContextMenuSelection)="onContextMenuSelection($event)"
+    ></app-prime-table>
+  </div>
+</div>

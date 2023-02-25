@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
 import { HomeComponent } from './home/home.component';
+import { LoadingComponent } from '../shared/components/loading/loading.component';
+import { MessagesComponent } from '../shared/components/messages/messages.component';
 
 export const DashboardRoutes: Routes = [
   {
@@ -31,7 +33,7 @@ export const DashboardRoutes: Routes = [
       {
         path: 'course',
         loadChildren: () =>
-          import('./course/course.module').then((m) => m.CourseModule),
+          import('./course/course.module').then((m) => m.CourseModule), // caution: promise
       },
     ],
   },

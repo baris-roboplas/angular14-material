@@ -1,0 +1,180 @@
+<div [formGroup]="stockLocationForm" autocomplete="off">
+  <div class="row">
+    <!--Stock Location Information-->
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header roboplasCardHeader">
+          <h3 class="card-title roboplas-branch-form-header">
+            {{ "General Information-1" | translate }}
+          </h3>
+          <div class="card-tools">
+            <button
+              class="btn btn-tool"
+              type="button"
+              data-card-widget="collapse"
+            >
+              <i class="fas fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <!-- Stock Location Information Form Content -->
+        <div class="card-body">
+          <!-- Stock Location Id -->
+          <input id="id" type="hidden" formControlName="id" />
+          <input id="rowVersion" type="hidden" formControlName="rowVersion" />
+
+          <!-- Stock Location Code-->
+          <div class="form-group row align-items-center">
+            <label
+              class="required col-sm-3 col-form-label text-sm roboplas-branch-form"
+              for="kod"
+              >{{ "Stock Location Code" | translate }}:</label
+            >
+            <div class="col-sm-9">
+              <input
+                class="form-control form-control-sm"
+                id="kod"
+                autocomplete="off"
+                placeholder="{{ 'Stock Location Code' | translate }}"
+                type="text"
+                formControlName="kod"
+              />
+            </div>
+          </div>
+
+          <!-- Stock Location Description -->
+          <div class="form-group row align-items-center">
+            <label
+              class="required col-sm-3 col-form-label text-sm"
+              for="aciklama"
+            >
+              {{ "Stock Location Description" | translate }}:</label
+            >
+
+            <div class="input-group input-group-sm col-sm-9">
+              <input
+                class="form-control"
+                id="aciklama"
+                type="text"
+                placeholder="{{ 'Stock Location Description' | translate }}"
+                name="aciklama"
+                formControlName="aciklama"
+              />
+            </div>
+          </div>
+
+          <!-- Stock Location Warehouse Id-->
+          <div class="form-group row align-items-center">
+            <label class="required col-sm-3 text-sm col-form-label"
+              >{{ "Related Warehouse" | translate }}:</label
+            >
+            <div class="col-sm-9">
+              <app-custom-lookup-dropdown
+                [controlName]="'depoId'"
+                [detailPageLink]="
+                  Constants.Paths.WareHouseManagement +
+                  '/' +
+                  Constants.Paths.Warehouses.Index +
+                  '/' +
+                  Constants.Paths.Warehouses.List
+                "
+                [bindLabel]="'kod'"
+                [loading]="stockLocationsWarehouseIdsLoading$ | async"
+                [placeholder]="'Select Group' | translate"
+                [lookupList]="stockLocationsWarehouseIds$ | async"
+                [formGroup]="stockLocationForm"
+              ></app-custom-lookup-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header roboplasCardHeader">
+          <h3 class="card-title roboplas-branch-form-header">
+            {{ "General Information-2" | translate }}
+          </h3>
+          <div class="card-tools">
+            <button
+              class="btn btn-tool"
+              type="button"
+              data-card-widget="collapse"
+            >
+              <i class="fas fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <!-- Stock Location Information Form Content -->
+        <div class="card-body">
+          <!-- Stock Location Width -->
+          <div class="form-group row align-items-center">
+            <label class="col-sm-3 col-form-label text-sm" for="en">
+              {{ "En" | translate }}:</label
+            >
+
+            <div class="input-group input-group-sm col-sm-9">
+              <input
+              placeholder="{{ 'Meters' | translate }}"
+                class="form-control"
+                id="en"
+                type="text"
+                name="en"
+                formControlName="en"
+              />
+            </div>
+          </div>
+          <!-- Stock Location Lenght -->
+          <div class="form-group row align-items-center">
+            <label class="col-sm-3 col-form-label text-sm" for="boy">
+              {{ "Boy" | translate }}:</label
+            >
+
+            <div class="input-group input-group-sm col-sm-9">
+              <input
+              placeholder="{{ 'Meters' | translate }}"
+
+                class="form-control"
+                id="boy"
+                type="text"
+                name="boy"
+                formControlName="boy"
+              />
+            </div>
+          </div>
+          <!-- Stock Location Height -->
+          <div class="form-group row align-items-center">
+            <label class="col-sm-3 col-form-label text-sm" for="yukseklik">
+              {{ "Yükseklik" | translate }}:</label
+            >
+
+            <div class="input-group input-group-sm col-sm-9">
+              <input
+              placeholder="{{ 'Meters' | translate }}"
+
+                class="form-control"
+                id="yukseklik"
+                type="text"
+                name="yukseklik"
+                formControlName="yukseklik"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mt-2" *ngIf="selectedStockLocation !== null">
+  <app-kayit-bilgileri [kayit]="selectedStockLocation"> </app-kayit-bilgileri>
+</div>
+<button
+  class="btn-save float"
+  id="save"
+  [claimGuard]="Constants.Claims.StokYerleri.Kayit"
+  [disabled]="stockLocationForm.pristine"
+  (click)="onSave()"
+  type="submit"
+>
+  <i class="fas fa-save"></i>
+</button>

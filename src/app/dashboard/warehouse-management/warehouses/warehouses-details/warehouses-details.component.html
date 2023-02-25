@@ -1,0 +1,306 @@
+<div [formGroup]="warehouseForm" autocomplete="off">
+  <div class="row">
+    <!-- Warehouse Information-1-->
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header roboplasCardHeader">
+          <h3 class="card-title roboplas-branch-form-header">
+            {{ "General Information-1" | translate }}
+          </h3>
+          <div class="card-tools">
+            <button
+              class="btn btn-tool"
+              type="button"
+              data-card-widget="collapse"
+            >
+              <i class="fas fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <!-- Warehouse Information Form Content -->
+        <div class="card-body">
+          <input id="id" type="hidden" formControlName="id" />
+          <input id="rowVersion" type="hidden" formControlName="rowVersion" />
+          <!-- Company -->
+          <app-company-select
+            [controlName]="'firmaId'"
+            [formGroup]="warehouseForm"
+            [required]="true"
+          ></app-company-select>
+          <!-- Warehouse Code-->
+          <div class="form-group row align-items-center">
+            <label
+              class="required col-sm-3 col-form-label text-sm roboplas-branch-form"
+              for="kod"
+              >{{ "Warehouse Code" | translate }}:</label
+            >
+            <div class="col-sm-9">
+              <input
+                class="form-control form-control-sm"
+                id="kod"
+                autocomplete="off"
+                placeholder="{{ 'Warehouse Code' | translate }}"
+                type="text"
+                formControlName="kod"
+              />
+            </div>
+          </div>
+
+          <!-- Warehouse Description -->
+          <div class="form-group row align-items-center">
+            <label class="required col-sm-3 col-form-label text-sm" for="tanim">
+              {{ "Warehouse Description" | translate }}:</label
+            >
+
+            <div class="input-group input-group-sm col-sm-9">
+              <input
+                class="form-control"
+                id="tanim"
+                type="text"
+                placeholder="{{ 'Warehouse Description' | translate }}"
+                name="tanim"
+                formControlName="tanim"
+              />
+            </div>
+          </div>
+
+          <!-- Warehouse Group Id-->
+          <div class="form-group row align-items-center">
+            <label class="required col-sm-3 text-sm col-form-label"
+              >{{ "Warehouse Group" | translate }}:</label
+            >
+            <div class="col-sm-9">
+              <app-custom-lookup-dropdown
+                [controlName]="'depoGrubuId'"
+                [detailPageLink]="'roboplaserp.net'"
+                [bindLabel]="'grupAdi'"
+                [loading]="warehouseGroupsLoading$ | async"
+                [placeholder]="'Select Group' | translate"
+                [lookupList]="warehouseGroups$ | async"
+                [formGroup]="warehouseForm"
+              ></app-custom-lookup-dropdown>
+            </div>
+          </div>
+
+          <!-- Warehouse Location -->
+          <div class="form-group row align-items-center">
+            <label class="required col-sm-3 col-form-label text-sm" for="konum">
+              {{ "Warehouse Location" | translate }}:</label
+            >
+
+            <div class="input-group input-group-sm col-sm-9">
+              <input
+                class="form-control"
+                id="konum"
+                type="text"
+                name="konum"
+                formControlName="konum"
+                placeholder="{{ 'Location' | translate }}"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Warehouse Information-2-->
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header roboplasCardHeader">
+          <h3 class="card-title roboplas-branch-form-header">
+            {{ "General Information-2" | translate }}
+          </h3>
+          <div class="card-tools">
+            <button
+              class="btn btn-tool"
+              type="button"
+              data-card-widget="collapse"
+            >
+              <i class="fas fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <!-- Warehouse Information-2 Form Content -->
+        <div class="card-body">
+          <!-- Warehouse Responsible 1 -->
+          <div class="form-group row align-items-center">
+            <label
+              class="required col-sm-3 text-sm col-form-label"
+              for="depoSorumlusu1Id"
+              >{{ "Warehouse Responsible-1" | translate }}:</label
+            >
+            <div class="col-sm-9" id="depoSorumlusu1Id">
+              <app-personel-multi-select
+                [translateName]="'Warehouse Responsibles'"
+                [multiple]="false"
+                [selectItemIds]="warehouseForm?.value?.depoSorumlusu1Id"
+                [formGroup]="warehouseForm"
+                [controlName]="'depoSorumlusu1Id'"
+              ></app-personel-multi-select>
+            </div>
+          </div>
+          <!-- Phone 1  -->
+          <div class="form-group row align-items-center">
+            <label class="col-sm-3 col-form-label text-sm" for="tel1">
+              {{ "Phone-1" | translate }}:</label
+            >
+            <div class="input-group input-group-sm col-sm-9">
+              <p-inputMask
+                id="tel1"
+                styleClass="form-control"
+                mask="(999) 999-9999"
+                name="tel1"
+                formControlName="tel1"
+                placeholder="(999) 999-9999"
+              ></p-inputMask>
+            </div>
+          </div>
+
+          <!-- Warehouse Responsible-2 Id -->
+          <div class="form-group row align-items-center">
+            <label
+              class="col-sm-3 text-sm col-form-label"
+              for="depoSorumlusu2Id"
+              >{{ "Warehouse Responsible-2" | translate }}:</label
+            >
+            <div class="col-sm-9" id="depoSorumlusu2Id">
+              <app-personel-multi-select
+                [translateName]="'Warehouse Responsibles'"
+                [multiple]="false"
+                [formGroup]="warehouseForm"
+                [controlName]="'depoSorumlusu2Id'"
+              ></app-personel-multi-select>
+            </div>
+          </div>
+
+          <!-- Phone 2  -->
+          <div class="form-group row align-items-center">
+            <label class="col-sm-3 col-form-label text-sm" for="tel2">
+              {{ "Phone-2" | translate }}:</label
+            >
+
+            <div class="input-group input-group-sm col-sm-9">
+              <p-inputMask
+                id="tel2"
+                styleClass="form-control"
+                mask="(999) 999-9999"
+                name="tel2"
+                formControlName="tel2"
+                placeholder="(532) 123-4567"
+              ></p-inputMask>
+            </div>
+          </div>
+
+          <!-- Is Closed? -->
+          <div class="form-group row align-items-center">
+            <label class="col-sm-3 col-form-label text-sm" for="kapali">
+              {{ "Kapalı" | translate }}:</label
+            >
+
+            <div class="col-sm-9 form-check">
+              <div class="d-flex justify-content-end">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    id="kapali"
+                    type="checkbox"
+                    formControlName="kapali"
+                  />
+                </div>
+              </div>
+
+              <label class="form-check-label text-sm" for="kapali"> </label>
+            </div>
+          </div>
+          <!-- Is Fixed? -->
+          <div class="form-group row align-items-center">
+            <label class="col-sm-3 col-form-label text-sm" for="sabitDepo">
+              {{ "Sabit" | translate }}:</label
+            >
+
+            <div class="col-sm-9 form-check">
+              <div class="d-flex justify-content-end">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    id="sabitDepo"
+                    type="checkbox"
+                    formControlName="sabitDepo"
+                  />
+                </div>
+              </div>
+
+              <label class="form-check-label text-sm" for="sabitDepo"> </label>
+            </div>
+          </div>
+          <!-- In Balance? -->
+          <div class="form-group row align-items-center">
+            <label class="col-sm-3 col-form-label text-sm" for="bakiyede">
+              {{ "Bakiyede" | translate }}:</label
+            >
+
+            <div class="col-sm-9 form-check">
+              <div class="d-flex justify-content-end">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    id="bakiyede"
+                    type="checkbox"
+                    formControlName="bakiyede"
+                  />
+                </div>
+              </div>
+
+              <label class="form-check-label text-sm" for="bakiyede"> </label>
+            </div>
+          </div>
+          <!-- Is Deleted? -->
+          <div class="form-group row align-items-center">
+            <label class="col-sm-3 col-form-label text-sm" for="isDeleted">
+              {{ "Silindi" | translate }}:</label
+            >
+
+            <div class="col-sm-9 form-check">
+              <div class="d-flex justify-content-end">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    id="isDeleted"
+                    type="checkbox"
+                    formControlName="isDeleted"
+                  />
+                </div>
+              </div>
+
+              <label class="form-check-label text-sm" for="isDeleted"> </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!!selectedWarehouse?.id" style="width: auto">
+    <p-tabView>
+      <p-tabPanel header="{{ 'Stock Locations' | translate }}">
+        <div class="card">
+          <app-stock-locations-list *ngIf="selectedWarehouse?.id">
+          </app-stock-locations-list>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+
+    <div class="mt-2" *ngIf="selectedWarehouse !== null">
+      <app-kayit-bilgileri [kayit]="selectedWarehouse"> </app-kayit-bilgileri>
+    </div>
+  </div>
+</div>
+
+<button
+  class="btn-save float"
+  id="save"
+  [claimGuard]="Constants.Claims.Depolar.Kayit"
+  [disabled]="warehouseForm.pristine"
+  (click)="onSave()"
+  type="submit"
+>
+  <i class="fas fa-save"></i>
+</button>

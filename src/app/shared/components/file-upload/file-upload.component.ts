@@ -127,10 +127,12 @@ export class FileUploadComponent
             tap(() => (this.fileUploadError = false)),
             catchError((err) => {
               this.fileUploadError = true;
-              // todo: handle error angular university
-              // semi-alternative: throwError
               return of(err);
             }),
+            // semi-alternative: catchError(err => {
+            //   this.fileUploadError = true;
+            //   this.handleError(err))
+            // }
             finalize(() => {
               this.uploadProgress = null;
               this._onTouched();
@@ -214,6 +216,11 @@ export class FileUploadComponent
 
     return errors;
   }
+
+  // handleError(error:any) {
+  //   this.router.navigateByUrl('/404');
+  //   return throwError(error);
+  // }
 }
 // caution:
 // When you create a Control i.e. any type extending AbstractControl such as FormGroup, FormControl, ArrayControl…

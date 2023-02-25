@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Lesson } from '../lessons/models/lesson';
 import { Course } from '../model/course';
 import { CoursesStore } from '../services/courses.store';
+import { LoadingService } from 'src/app/shared/components/loading/loading.service';
 
 @Component({
   selector: 'app-course-list',
@@ -17,7 +18,10 @@ export class CourseListComponent implements OnInit {
 
   advancedCourses$!: Observable<Course[]>;
 
-  constructor(private coursesStore: CoursesStore) {}
+  constructor(
+    private coursesStore: CoursesStore,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit() {
     this.reloadCourses();

@@ -38,7 +38,6 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.movieId = this.route.snapshot.params['id'];
-
     if (this.movieId) {
       this.pageType = 'edit';
       this.loadingBackdropService.show();

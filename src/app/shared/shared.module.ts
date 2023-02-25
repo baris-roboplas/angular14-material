@@ -13,13 +13,18 @@ import { AlertDialogComponent } from './utils/dialogs/alert-dialog/alert-dialog.
 import { SafeUrlPipe } from '../pipes/safe-url.pipe';
 import { OnlyOneErrorPipe } from '../pipes/only-one-error.pipe';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { MessagesComponent } from './components/messages/messages.component';
+
 const COMPONENTS = [
   AlertDialogComponent,
   ConfirmDialogComponent,
   FileUploadPreviewComponent,
   SafeUrlPipe,
   OnlyOneErrorPipe,
-  FileUploadComponent
+  FileUploadComponent,
+  LoadingComponent,
+  MessagesComponent,
 ];
 
 @NgModule({

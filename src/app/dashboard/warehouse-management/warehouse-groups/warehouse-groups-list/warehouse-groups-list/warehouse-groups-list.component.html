@@ -1,0 +1,98 @@
+<div class="card">
+  <div class="card-header card-header-danger">
+    <h4 class="card-title">{{ "GroupList" | translate }}</h4>
+    <a
+      class="pull-right"
+      *ngIf="Constants.Claims.DepoGruplari.Kayit | claimCheck"
+      (click)="showPopUp()"
+    >
+      <i
+        class="fa-regular fa-square-plus fa-2x"
+        id="add"
+        style="color: white"
+        title="{{ 'Add' | translate }}"
+      ></i>
+    </a>
+  </div>
+  <div class="card-body">
+    <app-prime-table
+      [loading]="warehouseGroupsListloading$ | async"
+      [list]="warehouseGroupsList$ | async"
+      [columns]="cols"
+      [hasIsActive]="true"
+      [scrollHeight]="'450px'"
+      [tableName]="'Depo Grupları'"
+      [contextMenuItems]="contextMenuItems"
+      (onContextMenuSelection)="createWarehouseForm($event)"
+    ></app-prime-table>
+  </div>
+</div>
+
+<!-- Add Group and Update Group-->
+<p-dialog
+  [(visible)]="warehouseGroupsFormDialog"
+  [style]="{ width: '450px' }"
+  [contentStyle]="{ overflow: 'visible' }"
+  [modal]="true"
+
+  header="{{ 'Warehouse Group Details' | translate }}"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <div [formGroup]="warehouseGroupsForm">
+      <!-- Warehouse Group ID -->
+      <input formControlName="id" type="hidden" />
+      <!-- Warehouse Group Code Model -->
+      <label class="required" for="float-group">{{
+        "Warehouse Code Model" | translate
+      }}</label>
+      <span class="p-float-label mb-4">
+        <input
+          id="kodModeli"
+          autocomplete="off"
+          type="text"
+          formControlName="kodModeli"
+          pInputText
+          required
+        />
+      </span>
+      <!-- Warehouse Group Name -->
+      <label class="required" for="float-group">{{
+        "Warehouse Group Name" | translate
+      }}</label>
+      <span class="p-float-label mb-4">
+        <input
+          id="grupAdi"
+          autocomplete="off"
+          type="text"
+          formControlName="grupAdi"
+          pInputText
+          required
+        />
+      </span>
+      <!-- Is Active? -->
+      <label class="required" for="float-group">{{
+        "Is Active?" | translate
+      }}</label>
+      <span class="p-float-label mb-4">
+        <input
+          class="ml-0 form-check-input"
+          id="isActive"
+          type="checkbox"
+          formControlName="isActive"
+        />
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      class="btn p-button btn-primary"
+      id="save"
+      [disabled]="warehouseGroupsForm.pristine"
+      (click)="onSave()"
+      type="button"
+    >
+      {{ "Save" | translate }}
+    </button>
+  </ng-template>
+</p-dialog>

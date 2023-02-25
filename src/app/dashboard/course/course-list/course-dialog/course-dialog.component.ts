@@ -4,8 +4,8 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { LoadingService } from 'src/app/dashboard/loading/loading.service';
-import { MessagesService } from 'src/app/dashboard/messages/messages.service';
+import { LoadingService } from 'src/app/shared/components/loading/loading.service';
+import { MessagesService } from 'src/app/shared/components/messages/messages.service';
 import { Course } from '../../model/course';
 import { CoursesStore } from '../../services/courses.store';
 

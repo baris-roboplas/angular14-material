@@ -14,7 +14,7 @@ export function getAllCourses(req: Request, res: Response) {
 }
 
 export function getCourseById(req: Request, res: Response) {
-  const courseId = req.params["id"];
+  const courseId = +req.params["courseId"];
 
   const courses: any = Object.values(COURSES);
 

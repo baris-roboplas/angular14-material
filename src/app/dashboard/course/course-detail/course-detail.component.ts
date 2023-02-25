@@ -29,10 +29,15 @@ export class CourseDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(
+      'CourseDetailComponent.ngOnInit() called',
+      this.route.snapshot.data['course']
+    );
     const courseId = parseInt(this.route.snapshot.paramMap.get('courseId')!);
 
     const course$ = this.coursesService.loadCourseById(courseId).pipe(
       startWith(null) // important to prevent initial black screen
+      // startWith(null as any) or startWith({}) // if ide false signature error occurs
     );
 
     const lessons$ = this.coursesService.loadAllCourseLessons(courseId).pipe(
